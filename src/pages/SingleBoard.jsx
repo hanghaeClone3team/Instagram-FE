@@ -1,4 +1,5 @@
 import React from 'react'
+import Sidebar from '../components/Sidebar'
 
 
 
@@ -7,7 +8,10 @@ import React from 'react'
 // 테스트용 주석
 function SingleBoard() {
   return (
-    <div>SingleBoard</div>
+    <>
+      <Sidebar></Sidebar>
+      <div>SingleBoard</div>
+    </>
   )
 }
 
