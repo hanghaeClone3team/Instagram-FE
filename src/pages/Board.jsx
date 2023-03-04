@@ -18,7 +18,7 @@ function Board() {
     <>
 
       <Sidebar setModal={setModal} />
-
+      <div>추가용 테스트</div>
 
 
 
