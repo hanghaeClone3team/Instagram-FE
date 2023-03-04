@@ -1,4 +1,5 @@
 import React from 'react'
+
 import Post from '../components/Post'
 import Sidebar from '../components/Sidebar'
 import styled from 'styled-components'
@@ -7,11 +8,15 @@ import Modal from '../components/Modal'
 
 
 
+
+
+
 // 전체 게시글 페이지
 function Board() {
   const [modal, setModal] = useState(false)
   return (
     <>
+
       <Sidebar setModal={setModal} />
 
 
@@ -33,6 +38,7 @@ function Board() {
       {
         modal && <Modal setModal={setModal}/>
       }</div>
+
 
     </>
   )
