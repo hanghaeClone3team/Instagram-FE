@@ -1,11 +1,11 @@
 import React from 'react'
+import MainLogin from '../components/MainLogin';
 
 const LogIn = () => {
   return (
-    <div>
-      로그인
-    </div>
+    <MainLogin />
   )
 }
 
 export default LogIn
+

@@ -1,11 +1,11 @@
 import React from 'react'
 
-const MainPage = () => {
+function Logout() {
   return (
     <div>
-      메인
+      
     </div>
   )
 }
 
-export default MainPage
+export default Logout
