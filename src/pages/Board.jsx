@@ -1,5 +1,6 @@
 import React from 'react'
 
+
 import Post from '../components/Post'
 import Sidebar from '../components/Sidebar'
 import styled from 'styled-components'
@@ -45,11 +46,12 @@ function Board() {
       }</div>
 
 
+
     </>
   )
 }
-
 export default Board
+
 
 const InnerContainer = styled.div`
   width: 100%;
