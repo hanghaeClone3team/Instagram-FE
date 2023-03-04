@@ -10,7 +10,9 @@ function SingleBoard() {
   return (
     <>
       <Sidebar></Sidebar>
-      <div>SingleBoard</div>
+
+      <div>상세 게시글 페이지</div>
+
     </>
   )
 }
