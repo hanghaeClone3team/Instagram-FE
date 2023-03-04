@@ -1,10 +1,9 @@
 import React from 'react'
+import RegisterBox from '../components/RegisterBox';
 
 const Register = () => {
   return (
-    <div>
-      회원가입
-    </div>
+    <RegisterBox />
   )
 }
 
