@@ -30,6 +30,10 @@ function Board() {
             <Post />
             <Post />
             <Post /><Post /><Post /><Post /><Post /><Post />
+            <Post /><Post />
+            <Post /><Post />
+            <Post /><Post />
+            
           </PostContainer>
         </InnerMainContainer>
       </InnerContainer>
