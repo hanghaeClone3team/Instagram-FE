@@ -3,6 +3,8 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import LogIn from '../pages/LogIn';
 import Register from '../pages/Register';
 import MainPage from '../pages/MainPage';
+import Board from '../pages/Board';
+import SingleBoard from '../pages/SingleBoard';
 
 function Router() {
   return (
@@ -11,6 +13,8 @@ function Router() {
             <Route path='/' element={<LogIn />}/>
             <Route path='/register' element={<Register />}/>
             <Route path='/main' element={<MainPage />}/>
+            <Route path='/board' element={<Board/>}/>
+            <Route path='/board:id' element={<SingleBoard/>}/>
         </Routes>
     </BrowserRouter>
   )
