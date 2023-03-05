@@ -2,6 +2,9 @@ import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
 import { register } from '../api/auth';
+import KakaoLogin from './KakaoLogin';
+// import { usernameCheck } from '../api/auth';
+
 
 const RegisterBox = () => {
     const [emailValue, emailValueHandler] = useInput();
@@ -34,7 +37,6 @@ const RegisterBox = () => {
 
     const onClickRegisterButton = () => {
         if(!emailValue || !nameValue || !nicknameValue || !pwValue || !pwconfirmValue) return 
-
         if(pwValue === pwconfirmValue){
             register({email:emailValue ,
                       username:nameValue,
@@ -52,12 +54,21 @@ const RegisterBox = () => {
             }
     }
    
+    // const checkUsernameValid = () => {
+    //     if(Response.data === 2){
+    //         usernameCheck({ username: nicknameValue }).then((res)=>{
+    //             alert('이미 존재하는 사용자 이름입니다.');
+    //         })
+    //     }
+    // }
+  
+
   return (
     <Wrap>
         <RegiBox>
             <H1>Instagram</H1>
             <P1>친구들의 사진과 동영상을 보려면 가입하세요.</P1>
-            <KakaoBtn>카카오톡으로 로그인</KakaoBtn>
+            <KakaoLogin />
             <Or>
                 <hr style={{ width:"100px", background:"gray",height:"1px",  border:"0" }}/>
                 또는
@@ -119,20 +130,6 @@ const H1 = styled.h1 `
 const P1 = styled.p `
     margin-bottom:30px;
 `
-
-const KakaoBtn = styled.button `
-    width:280px; height:35px;
-    background:#67b6fa;
-    border:none;
-    border-radius:10px;
-    color:white;
-    font-weight:bold;
-    font-size:0.9rem;
-    line-height:35px;
-    margin-bottom:20px;
-    cursor:pointer;
-`
-
 
 const Or = styled.div `
     display:flex;

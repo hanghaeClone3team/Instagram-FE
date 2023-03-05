@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import {useEffect} from 'react';
 import styled from 'styled-components';
 import useInput from '../hooks/useInput';
+import KakaoLogin from './KakaoLogin';
 
 
 const MainLogin = () => {
@@ -54,7 +55,7 @@ const MainLogin = () => {
               <hr style={{ width:"100px", background:"gray",height:"1px",  border:"0" }}/>
             </Or>
 
-            <KakaoBtn>카카오톡으로 로그인</KakaoBtn>
+            <KakaoLogin />
             <P1>비밀번호를 잊으셨나요?</P1>
         </LoginBox>
         
