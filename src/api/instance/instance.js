@@ -3,9 +3,11 @@ import { Cookies } from "react-cookie";
 
 const cookies = new Cookies();
 
+
 const instance = axios.create({
-    baseURL : process.env.REACT_APP_BE_SERVER,
-    headers : {Authorization : cookies.get('authorization')}
+    baseURL : 'http://3.34.133.26:8080',
+    headers : {Authorization : cookies.get('authorization')},
+    withCredentials:true
 });
 
 instance.interceptors.request.use((config) => {
@@ -13,6 +15,7 @@ instance.interceptors.request.use((config) => {
     config.headers.Authorization = token;
     return config;
 }, (error) => {
+    
     return Promise.reject(error);
 })
 
