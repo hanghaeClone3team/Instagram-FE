@@ -1,9 +1,8 @@
 import styled from 'styled-components'
 import { Link, useNavigate } from 'react-router-dom';
 import useInput from '../hooks/useInput';
-import { register } from '../api/auth';
+import { register, usernameCheck } from '../api/auth';
 import KakaoLogin from './KakaoLogin';
-// import { usernameCheck } from '../api/auth';
 
 
 const RegisterBox = () => {
@@ -13,13 +12,19 @@ const RegisterBox = () => {
     const [pwValue, pwValueHandler] = useInput();
     const [pwconfirmValue, pwconfirmValueHandler] = useInput();
 
+
     const navigate = useNavigate();
 
     //email 형식
     const checkEmail = (e) => {
-        var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i
-        // 형식에 맞는 경우 true 리턴
+        var regExp = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/i;
         console.log('이메일 유효성 검사 :: ', regExp.test(e.target.value))
+    }
+
+    const checkName = (e) => {
+        if(e.target.value.length < 2){
+        console.log('성명 유효성 검사 ::', (e.target.value.length))
+        } 
     }
 
     // username : 소문자, 숫자, ._만 입력 가능, 4~15 글자
@@ -28,12 +33,12 @@ const RegisterBox = () => {
         console.log('사용자 이름 유효성 검사 ::', regExp.test(e.target.value))
     }
 
+
     // pw : 대소문자, 특수문자, 숫자만 입력 가능, 8~15 글자
     const checkPw = (e) => {
-        var regExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
-        console.log('비밀번호 유효성 검사 ::', regExp.test(e.target.value))
+    var regExp = /^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,25}$/
+    console.log('비밀번호 유효성 검사 ::', regExp.test(e.target.value))
     } 
-
 
     const onClickRegisterButton = () => {
         if(!emailValue || !nameValue || !nicknameValue || !pwValue || !pwconfirmValue) return 
@@ -50,19 +55,20 @@ const RegisterBox = () => {
                     return error;
                 })
             }else{
-                console.log('비밀번호가 동일하지 않습니다.')
+                alert('비밀번호가 동일하지 않습니다.');
             }
     }
-   
-    // const checkUsernameValid = () => {
-    //     if(Response.data === 2){
-    //         usernameCheck({ username: nicknameValue }).then((res)=>{
-    //             alert('이미 존재하는 사용자 이름입니다.');
-    //         })
-    //     }
-    // }
-  
 
+    const checkNickname = () => {
+        usernameCheck({ username:nicknameValue }).then((res)=>{
+            alert('사용 가능한 이름입니다.');
+        }).catch((error)=>{
+            console.log(error);
+            alert('중복된 사용자 이름입니다.');
+            return error;
+        })
+    }
+   
   return (
     <Wrap>
         <RegiBox>
@@ -75,16 +81,16 @@ const RegisterBox = () => {
                 <hr style={{ width:"100px", background:"gray",height:"1px",  border:"0" }}/>
             </Or>
             <IdInput type="text" onBlur={checkEmail} value={emailValue || ""} onChange={(e)=>{emailValueHandler(e)}} placeholder='이메일 주소' /> <br />
-            <NickNameInput type="text" value={nameValue || ""} onChange={(e)=>{NameValueHandler(e)}} placeholder='성명' /> <br />
+            <NameInput type="text" onBlur={checkName} value={nameValue || ""} onChange={(e)=>{NameValueHandler(e)}} placeholder='성명' /> <br />
             <UsernameInput type="text" onBlur={checkUsername} value={nicknameValue || ""} onChange={(e)=>{nicknameValueHandler(e)}} placeholder='사용자 이름'/> <br />
-            <CheckBtn>중복 확인</CheckBtn>
+            <CheckBtn onClick={checkNickname}>중복 확인</CheckBtn>
             <PwInput type="password" onBlur={checkPw} value={pwValue || ""} onChange={(e)=>{pwValueHandler(e)}} placeholder='비밀번호'/> <br />
             <PwConfirmInput type="password" value={pwconfirmValue || ""} onChange={(e)=>{pwconfirmValueHandler(e)}} placeholder='비밀번호 확인'/> <br />
             <P2>저희 서비스를 이용하는 사람이 회원님의 연락처 정보를 <br />instagram에 업로드했을 수도 있습니다.</P2>
             <P3>더 알아보기</P3>
             <RegisterBtn onClick={()=>{onClickRegisterButton()}}>가입</RegisterBtn>
         </RegiBox>
-        
+
         <LoginBox>
             계정이 없으신가요?
             <Link to="/" style={{ textDecoration: "none" }}>
@@ -137,7 +143,6 @@ const Or = styled.div `
     margin-bottom:20px;
 `
 
-
 const IdInput = styled.input `
     width:260px; height:35px;
     padding-left:1rem;
@@ -147,7 +152,7 @@ const IdInput = styled.input `
 `
 
 
-const NickNameInput = styled.input `
+const NameInput = styled.input `
     width:260px; height:35px;
     padding-left:1rem;
     border-radius:5px;
@@ -248,5 +253,18 @@ const AppBtn = styled.button `
 const GoogleBtn = styled.button `
     cursor:pointer;
 `
+
+const Span = styled.button `
+    font-size:2rem;
+
+    &.success {
+        color:black;
+    }
+    &.error {
+        color:Red;
+    }
+`
+
+
 
 

@@ -2,8 +2,8 @@ import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 const  KakaoLogin = () => {
-    const REST_API_KEY = "6384218b1ef1fbdb6829985ce1df3025";
-    const REDIRECT_URI = "http://52.79.210.171:8080";
+    const REST_API_KEY = "ddc603749d78abff3f309e771a37719f";
+    const REDIRECT_URI = "http://3.34.133.26:8080";
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     const KakaoLoginHandler = () => {
         window.location.href = KAKAO_AUTH_URL;

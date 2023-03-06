@@ -28,7 +28,7 @@ const MainLogin = () => {
     const onClickLoginButton = () => {
         if(!emailValue || !pwValue) return;
         login({ email:emailValue, password:pwValue }).then((res)=>{
-            const authId = res.headers.Authorizati
+            const authId = res.headers.authorization
             setCookie("authorization", 'Bearer ' + authId);
             navigate('/board');
         }).catch((error)=>{
