@@ -91,7 +91,6 @@ function Sidebar(props) {
 
           <button>
             <span>
-              <i className="uil uil-bars"> </i>
               <Menubar />
             </span>
           </button>

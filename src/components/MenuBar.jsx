@@ -1,7 +1,24 @@
 import React, { useRef, useState } from 'react'
 import styled from 'styled-components';
+import { IoMdSettings } from "react-icons/io";
+import { RiHistoryLine } from "react-icons/ri";
+import { CgSoftwareDownload } from "react-icons/cg";
+import { RiMoonFill } from "react-icons/ri";
+import { RiFeedbackLine } from "react-icons/ri";
+import { useNavigate } from 'react-router-dom';
+import useLogout from "../hooks/useLogout";
+
 
 const Menubar = () => {
+  const navigate = useNavigate();
+
+    const [logout] = useLogout();
+
+    const onClickLogout = () => {
+        logout();
+        window.location.replace('/');
+    }
+  
   const [isOpen2, setIsOpen2] = useState(false);
 
     const openModalHandler2 = () => {
@@ -11,57 +28,118 @@ const Menubar = () => {
     const outSection = useRef();
 
   return (
-    <ModalContainer>
-            <ModalBtn2 onClick={openModalHandler2}>
-                {isOpen2 ? "" : "더보기"}
-            </ModalBtn2>
-            {
-              isOpen2 === true
-              ? (<ModalBackGround2 ref={outSection} onClick={(e)=>{
-                if(outSection.current === e.target) {
-                  setIsOpen2(false)
-                }
-              }}>
-                <ModalOverlay2 onClick={!openModalHandler2}>
-                  <ModalCon2 onClick={!openModalHandler2}>
-                     <ModalDiv>닫기 버튼 1개가 있고, <br /> 외부 영역을 누르면 모달이 닫혀요.</ModalDiv>
-                     <ModalOverlayCloseBtn2 onClick={openModalHandler2}></ModalOverlayCloseBtn2>
-                  </ModalCon2>
-                  </ModalOverlay2>
-                </ModalBackGround2>) : null
-            }      
-          </ModalContainer>
+       <>
+          <ModalBtn2 onClick={openModalHandler2}>
+              <i className="uil uil-bars"> </i> &nbsp; &nbsp; 
+              {isOpen2 ? "더 보기" : "더 보기"}
+          </ModalBtn2>
+          {
+            isOpen2 === true
+            ? (<ModalBackGround2 ref={outSection} onClick={(e)=>{
+              if(outSection.current === e.target) {
+                setIsOpen2(false)
+              }
+          }}>
+       
+            <ModalDiv>
+              <Btn1>설정<IoMdSettings size="25"/></Btn1>  <hr style={{ width:"230px", background:"#c7c7c7",height:"0.5px",  border:"0" , marginTop:"-20px"}}/>
+              <Btn2>내 활동<RiHistoryLine size="25"/></Btn2> <hr style={{ width:"230px", background:"#c7c7c7",height:"0.5px",  border:"0" , marginTop:"-20px"}}/>
+              <Btn3>저장됨<CgSoftwareDownload size="25"/></Btn3> <hr style={{ width:"230px", background:"#c7c7c7",height:"0.5px",  border:"0" , marginTop:"-20px"}}/>
+              <Btn4>모드 전환<RiMoonFill size="23" /></Btn4> <hr style={{ width:"230px", background:"#c7c7c7",height:"0.5px",  border:"0" , marginTop:"-20px"}}/>
+              <Btn5>문제 신고<RiFeedbackLine size="23" /></Btn5>
+              <Btn6>계정 전환</Btn6> <hr style={{ width:"230px", background:"#c7c7c7",height:"0.5px",  border:"0" , marginTop:"-20px"}}/>
+              <Btn7 onClick={()=>{onClickLogout()}}>로그아웃</Btn7> 
+            </ModalDiv>
+            </ModalBackGround2>) : null
+          }      
+      </>
   )
 }
 
 export default Menubar
 
-const ModalContainer = styled.div`
-
-`
 
 const ModalBtn2 = styled.button`
-
+  display: flex;
+  align-items: center;
+  position:relative;
+  left:5px;
+  width:200px;
 `
 
 const ModalBackGround2 = styled.div`
-
+  position: fixed;
+  top:0; left: 0; bottom: 0; right: 0;
+  z-index:10;
 `
 
-const ModalOverlay2 = styled.div`
-
+const ModalDiv = styled.div` 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  position:fixed;
+  bottom:100px; left:50px;
+  width:260px; height:410px;
+  background:white;
+  border-radius:10px;
+  box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.2);
+  -webkit-box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.2);
+  -moz-box-shadow: 2px 2px 5px 1px rgba(0,0,0,0.2);
+  padding:20px;
 `
 
-const ModalCon2 = styled.div`
-
+const Btn1 = styled.button`
+  width:90%;
+  display:flex;
+  justify-content:space-between;
+  font-size:1.1rem;
+  margin-top:-80px;
 `
 
-const ModalDiv = styled.div`
-  width:200px;
-  background:black;
 
+const Btn2 = styled.button`
+  width:90%; 
+  display:flex;
+  justify-content:space-between;
+  font-size:1.1rem;
+  margin-top:20px;
 `
 
-const ModalOverlayCloseBtn2 = styled.button`
 
+const Btn3 = styled.button`
+  width:90%;
+  display:flex;
+  justify-content:space-between;
+  font-size:1.1rem;
+  margin-top:20px;
+`
+
+
+const Btn4 = styled.button`
+  width:90%;
+  display:flex;
+  justify-content:space-between;
+  font-size:1.1rem;
+  margin-top:20px;
+`
+
+
+const Btn5 = styled.button`
+  width:90%;
+  display:flex;
+  justify-content:space-between;
+  font-size:1.1rem;
+  margin-top:20px;
+`
+
+
+const Btn6 = styled.button`
+  position:absolute;
+  left:33px; bottom:45px; 
+`
+
+const Btn7 = styled.button`
+  position:absolute;
+  left:33px; bottom:0;
 `
