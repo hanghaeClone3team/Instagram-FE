@@ -9,20 +9,24 @@ import { useMutation, useQuery, useQueryClient } from 'react-query'
 import { deletePost, getPost } from '../api/crud'
 import { token } from '../api/crud'
 import jwtDecode from 'jwt-decode'
+import PostModal from './PostModal'
+import EditPostModal from './EditPostModal'
+import { Link } from 'react-router-dom'
 
 
-
-function Post(props) {
+function Post() {
 
 
     const [showComment, setShowComment] = useState(false)
     const [comment, setComment] = useState();
+    const [postModal, setPostModal] = useState(false);
+    const [editPostModal, setEditPostModal] = useState(false)
 
     const showPostModal = () => {
-        props.setPostModal(true)
+        setPostModal(true)
     }
     const showEditPostModal = () => {
-        props.setEditPostModal(true)
+        setEditPostModal(true)
     }
 
 
@@ -51,7 +55,7 @@ function Post(props) {
         alert("정말로 삭제하시겠습니까?")
         deletePostMutation.mutate(postId)
     }
-    console.log(data)
+    console.log(data.data)
     return (
         <>
             
@@ -65,7 +69,7 @@ function Post(props) {
                                 {
                                     decode_token.sub === item.username ? <button onClick={() => {onDeletePostHandler(item.id)}}>삭제</button> : null
                                 }
-                                <EditPost>수정</EditPost>
+                                <EditPost><Link to={`/editpost/${item.id}`}>수정</Link></EditPost>
                                 
                             </UserInfo>
                             <PostContent>
@@ -103,10 +107,18 @@ function Post(props) {
                                     </form>
                                 </CommentInput>
                             </PostCommentContainer>
-                            </Container>
+                            <div>
+        {
+            postModal && <PostModal setPostModal={setPostModal} post={item}/> 
+        }
+        {/* {
+          editPostModal && <EditPostModal setEditPostModal={setEditPostModal} post={item}/> 
+        } */}
+        </div>
+                        </Container>
+                        
                     ))
                 }
-           
         </>
     )
 }

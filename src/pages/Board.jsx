@@ -17,8 +17,7 @@ import EditPostModal from '../components/EditPostModal'
 // 전체 게시글 페이지
 function Board() {
   const [modal, setModal] = useState(false)
-  const [postModal, setPostModal] = useState(false);
-  const [editPostModal, setEditPostModal] = useState(false)
+  
   return (
     <>
 
@@ -26,11 +25,12 @@ function Board() {
       
 
 
+
       {/* 중앙 post 영역 */}
       <InnerContainer>
         <InnerMainContainer>
           <PostContainer>
-            <Post setPostModal={setPostModal} setEditPostModal={setEditPostModal}/>
+            <Post />
             
           </PostContainer>
         </InnerMainContainer>
@@ -41,12 +41,6 @@ function Board() {
       {
         modal && <Modal setModal={setModal}/>
         
-      }
-      {
-        postModal && <PostModal setPostModal={setPostModal}/>
-      }
-      {
-        editPostModal && <EditPostModal setEditPostModal={setEditPostModal}/>
       }
       </div>
 
