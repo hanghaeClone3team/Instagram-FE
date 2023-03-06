@@ -15,7 +15,7 @@ function Modal(props) {
   const queryClient = useQueryClient();
 
   const addMutation = useMutation(addPost, {
-    onSuccess : () => {
+    onSuccess: () => {
       queryClient.invalidateQueries();
     }
   })
@@ -53,14 +53,15 @@ function Modal(props) {
   //   alert('작성이 완료되었습니다.')
   //   navigate(`/${userDormitory}`)
   // }
+  const newPostContent = new Blob([JSON.stringify(input.content)], {
+    type: "application/json"
+  })
   const onSubmit = (e) => {
     e.preventDefault();
     const data = new FormData();
     data.append("image", imgFile)
-    data.append("content", new Blob([JSON.stringify(input.content)], {
-      type:"application/json"
-    }))
-    console.log("이미지 : " , data.get("image"), "본문 내용 :", data.get("content"))
+    data.append("content", newPostContent)
+    console.log("이미지 : ", data.get("image"), "본문 내용 :", data.get("content"))
     addMutation.mutate(data)
   }
 
@@ -81,45 +82,54 @@ function Modal(props) {
             {
               imageUrl ? <ModalPostImg src={imageUrl}></ModalPostImg> : null
             }
-            <ModalPostImgBox
-              id='imgfile'
-              type="file"
-              accept='image/*'
-              onChange={onChangeImage}
-              ref={imgRef}
-            />
 
-            {
-              percent ?
-                (
-                  <ModalPostBoxTwoLabel>{file.name}</ModalPostBoxTwoLabel>
-                )
-                :
-                (
-                  <ModalPostBoxTwoLabel>사진을 선택하세요!</ModalPostBoxTwoLabel>
-                )
-            }
-            <SelectImgButton onClick={() => imgRef.current.click()}>
-              컴퓨터에서 선택
-            </SelectImgButton>
+            
+              <ModalPostImgBox
+                id='imgfile'
+                type="file"
+                accept='image/*'
+                onChange={onChangeImage}
+                ref={imgRef}
+              />
+
+
+              {
+                percent ?
+                  (
+                    <ModalPostBoxTwoLabel>{file.name}</ModalPostBoxTwoLabel>
+                  )
+                  :
+                  (
+                    <ModalPostBoxTwoLabel>사진을 선택하세요!</ModalPostBoxTwoLabel>
+                  )
+              }
+
+              <SelectImgButton onClick={() => imgRef.current.click()}>
+                컴퓨터에서 선택
+              </SelectImgButton>
+
           </ModalPostBoxOne>
-          <ModalPostBoxTwo>
-            {/* 공유 버튼 */}
-            <PostUpload>
-              <PostButton onClick={onSubmit}>공유하기</PostButton>
-            </PostUpload>
+        
+        <ModalPostBoxTwo>
+          
+          <PostUpload>
 
-            {/* 게시물 내용 작성 영역 */}
-            <PostTextArea
-              name='content'
-              value={input.content}
-              onChange={contentsChangeHandler}
-              placeholder="내용을 입력하세요"
-            ></PostTextArea>
-          </ModalPostBoxTwo>
-        </ModalPostBoxContainer>
-      </ModalPostMake>
-    </ModalBackground>
+            <PostButton onClick={onSubmit}>공유하기</PostButton>
+
+          </PostUpload>
+
+          
+          <PostTextArea
+            name='content'
+            value={input.content}
+            onChange={contentsChangeHandler}
+            placeholder="내용을 입력하세요"
+          ></PostTextArea>
+        
+        </ModalPostBoxTwo>
+      </ModalPostBoxContainer>
+    </ModalPostMake>
+    </ModalBackground >
   )
 }
 
@@ -241,6 +251,7 @@ const PostUpload = styled.div`
   margin-top: 10px;
   height: 30px;
   display: flex;
+  
   justify-content: right;
   border-bottom: 1px solid #bababa;
 `
