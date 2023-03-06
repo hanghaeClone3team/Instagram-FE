@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { useMutation, useQueryClient } from 'react-query';
 import { addPost } from '../api/crud';
 
+
 function Modal(props) {
 
   const [input, setInput] = useState({ content: "" })
@@ -53,16 +54,22 @@ function Modal(props) {
   //   alert('작성이 완료되었습니다.')
   //   navigate(`/${userDormitory}`)
   // }
-  const newPostContent = new Blob([JSON.stringify(input.content)], {
+  
+  // const postRequestDto = {"content" : input.content}
+  const body = {
+    content:input.content
+  }
+  const newPostContent = new Blob([JSON.stringify(body)], {
     type: "application/json"
   })
   const onSubmit = (e) => {
     e.preventDefault();
     const data = new FormData();
     data.append("image", imgFile)
-    data.append("content", newPostContent)
-    console.log("이미지 : ", data.get("image"), "본문 내용 :", data.get("content"))
+    data.append("postRequestDto", newPostContent)
+    console.log("이미지 : ", data.get("image"), "본문 내용 :", data.get("postRequestDto"))
     addMutation.mutate(data)
+    props.setModal(false);
   }
 
   return (

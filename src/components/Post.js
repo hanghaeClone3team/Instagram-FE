@@ -5,67 +5,120 @@ import like from '../img/like.png'
 import cmt from '../img/comment.png'
 import post from '../img/post.png'
 import save from '../img/save.png'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { deletePost, getPost } from '../api/crud'
+import { token } from '../api/crud'
+import jwtDecode from 'jwt-decode'
+import PostModal from './PostModal'
+import EditPostModal from './EditPostModal'
+import { Link } from 'react-router-dom'
 
 
+function Post() {
 
-function Post(props) {
+
     const [showComment, setShowComment] = useState(false)
     const [comment, setComment] = useState();
-    
+    const [postModal, setPostModal] = useState(false);
+    const [editPostModal, setEditPostModal] = useState(false)
+
     const showPostModal = () => {
-        props.setPostModal(true)
-      }
+        setPostModal(true)
+    }
+    const showEditPostModal = () => {
+        setEditPostModal(true)
+    }
 
 
     const onCommentHandler = (e) => {
         setComment(e.target.value)
     }
+    const { isLoading, isError, data } = useQuery(['post'], getPost)
+    const queryClient = useQueryClient();
 
+    const deletePostMutation = useMutation(deletePost, {
+        onSuccess : () => {
+            queryClient.invalidateQueries('post')
+        }
+    })
+    if (isLoading) {
+        return <h1>로딩중...</h1>
+    }
+    if (isError) {
+        return <h1>Error...</h1>
+    }
+    
+    const decode_token = jwtDecode(token)
+    console.log(decode_token)
+
+    const onDeletePostHandler = (postId) => {
+        alert("정말로 삭제하시겠습니까?")
+        deletePostMutation.mutate(postId)
+    }
+    console.log(data.data)
     return (
         <>
-            <Container>
-                <UserInfo>
+            
+                {
+                    data.data.map((item) => (
+                        <Container key = {item.id}>
+                            <UserInfo>
 
-                    <img src={user} alt='유저' />
-                    <UserInfoText>유저 이름</UserInfoText>
-                    <EditPost>수정</EditPost>
-                </UserInfo>
-                <PostContent>
-                    <img
-                        src='https://cdn.pixabay.com/photo/2020/07/04/05/24/cat-5368270__480.jpg'
-                        alt='이미지'
-                    />
-                </PostContent>
-                <PostCommentContainer>
-                    <PostCommentButton>
-                        <img src={like} alt="좋아요" />
-                        <img src={cmt} alt="댓글 보기"  onClick={showPostModal}/>
-                        <img src={post} alt="공유" />
-                        <img src={save} alt="저장" />
-                    </PostCommentButton>
-                    <LikeCount>
-                        <p>좋아요 100개</p>
-                    </LikeCount>
-                    <PostDescription showComment={showComment}>
-                        <h5>
-                            게시글 내용
-                        </h5>
+                                <img src={user} alt='유저' />
+                                <UserInfoText>{item.username}</UserInfoText>
+                                {
+                                    decode_token.sub === item.username ? <button onClick={() => {onDeletePostHandler(item.id)}}>삭제</button> : null
+                                }
+                                <EditPost><Link to={`/editpost/${item.id}`}>수정</Link></EditPost>
+                                
+                            </UserInfo>
+                            <PostContent>
+                                <img
+                                    src={item.imageUrl}
+                                    alt='이미지'
+                                />
+                            </PostContent>
+                            <PostCommentContainer>
+                                <PostCommentButton>
+                                    <img src={like} alt="좋아요" />
+                                    <img src={cmt} alt="댓글 보기" onClick={showPostModal} />
+                                    <img src={post} alt="공유" />
+                                    <img src={save} alt="저장" />
+                                </PostCommentButton>
+                                <LikeCount>
+                                    <p>좋아요 100개</p>
+                                </LikeCount>
+                                <PostDescription showComment={showComment}>
+                                    <h5>
+                                        {item.contents}
+                                    </h5>
 
-                        <div className='description_button'>
-                            <span onClick={showPostModal}>댓글 ~개 모두 보기</span>
-                            <p onClick={() => setShowComment(!showComment)}>더 보기</p>
-                        </div>
-                    </PostDescription>
-                    <CommentInput>
-                        <form>
-                            <input type="text" placeholder='댓글 달기...' value={comment} onChange={onCommentHandler} />
-                            {
-                                comment ? <button type='submit'>게시</button> : null
-                            }
-                        </form>
-                    </CommentInput>
-                </PostCommentContainer>
-            </Container>
+                                    <div className='description_button'>
+                                        <span onClick={showPostModal}>댓글 ~개 모두 보기</span>
+                                        <p onClick={() => setShowComment(!showComment)}>더 보기</p>
+                                    </div>
+                                </PostDescription>
+                                <CommentInput>
+                                    <form>
+                                        <input type="text" placeholder='댓글 달기...' value={comment} onChange={onCommentHandler} />
+                                        {
+                                            comment ? <button type='submit'>게시</button> : null
+                                        }
+                                    </form>
+                                </CommentInput>
+                            </PostCommentContainer>
+                            <div>
+        {
+            postModal && <PostModal setPostModal={setPostModal} post={item}/> 
+        }
+        {/* {
+          editPostModal && <EditPostModal setEditPostModal={setEditPostModal} post={item}/> 
+        } */}
+        </div>
+                        </Container>
+                        
+                    ))
+                }
         </>
     )
 }
@@ -107,7 +160,7 @@ const EditPost = styled.p`
         font-size: 14px;
         line-height: 18px;
         font-weight: 600;
-        margin-left: 450px;
+        margin-left: 50px;
         cursor: pointer;
         color: #18a4f8;
 `
