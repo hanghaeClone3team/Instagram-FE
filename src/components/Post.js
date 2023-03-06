@@ -5,61 +5,108 @@ import like from '../img/like.png'
 import cmt from '../img/comment.png'
 import post from '../img/post.png'
 import save from '../img/save.png'
+import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { deletePost, getPost } from '../api/crud'
+import { token } from '../api/crud'
+import jwtDecode from 'jwt-decode'
 
 
 
-function Post() {
+function Post(props) {
+
+
     const [showComment, setShowComment] = useState(false)
     const [comment, setComment] = useState();
+
+    const showPostModal = () => {
+        props.setPostModal(true)
+    }
+    const showEditPostModal = () => {
+        props.setEditPostModal(true)
+    }
+
 
     const onCommentHandler = (e) => {
         setComment(e.target.value)
     }
+    const { isLoading, isError, data } = useQuery(['post'], getPost)
+    const queryClient = useQueryClient();
 
+    const deletePostMutation = useMutation(deletePost, {
+        onSuccess : () => {
+            queryClient.invalidateQueries('post')
+        }
+    })
+    if (isLoading) {
+        return <h1>로딩중...</h1>
+    }
+    if (isError) {
+        return <h1>Error...</h1>
+    }
+    
+    const decode_token = jwtDecode(token)
+    console.log(decode_token)
+
+    const onDeletePostHandler = (postId) => {
+        alert("정말로 삭제하시겠습니까?")
+        deletePostMutation.mutate(postId)
+    }
+    console.log(data)
     return (
         <>
-            <Container>
-                <UserInfo>
+            
+                {
+                    data.data.map((item) => (
+                        <Container key = {item.id}>
+                            <UserInfo>
 
-                    <img src={user} alt='유저' />
-                    <p>유저 이름</p>
-                </UserInfo>
-                <PostContent>
-                    <img
-                        src='https://cdn.pixabay.com/photo/2020/07/04/05/24/cat-5368270__480.jpg'
-                        alt='이미지'
-                    />
-                </PostContent>
-                <PostCommentContainer>
-                    <PostCommentButton>
-                        <img src={like} alt="좋아요" />
-                        <img src={cmt} alt="댓글 보기" />
-                        <img src={post} alt="공유" />
-                        <img src={save} alt="저장" />
-                    </PostCommentButton>
-                    <LikeCount>
-                        <p>좋아요 100개</p>
-                    </LikeCount>
-                    <PostDescription showComment={showComment}>
-                        <h5>
-                            게시글 내용
-                        </h5>
+                                <img src={user} alt='유저' />
+                                <UserInfoText>{item.username}</UserInfoText>
+                                {
+                                    decode_token.sub === item.username ? <button onClick={() => {onDeletePostHandler(item.id)}}>삭제</button> : null
+                                }
+                                <EditPost>수정</EditPost>
+                                
+                            </UserInfo>
+                            <PostContent>
+                                <img
+                                    src={item.imageUrl}
+                                    alt='이미지'
+                                />
+                            </PostContent>
+                            <PostCommentContainer>
+                                <PostCommentButton>
+                                    <img src={like} alt="좋아요" />
+                                    <img src={cmt} alt="댓글 보기" onClick={showPostModal} />
+                                    <img src={post} alt="공유" />
+                                    <img src={save} alt="저장" />
+                                </PostCommentButton>
+                                <LikeCount>
+                                    <p>좋아요 100개</p>
+                                </LikeCount>
+                                <PostDescription showComment={showComment}>
+                                    <h5>
+                                        {item.contents}
+                                    </h5>
 
-                        <div className='description_button'>
-                            <span >댓글 ~개 모두 보기</span>
-                            <p onClick={() => setShowComment(!showComment)}>더 보기</p>
-                        </div>
-                    </PostDescription>
-                    <CommentInput>
-                        <form>
-                            <input type="text" placeholder='댓글 달기...'  value={comment} onChange={onCommentHandler}/>
-                            {
-                                !comment  ? <button type='submit'>게시</button> : null 
-                            }
-                        </form>
-                    </CommentInput>
-                </PostCommentContainer>
-            </Container>
+                                    <div className='description_button'>
+                                        <span onClick={showPostModal}>댓글 ~개 모두 보기</span>
+                                        <p onClick={() => setShowComment(!showComment)}>더 보기</p>
+                                    </div>
+                                </PostDescription>
+                                <CommentInput>
+                                    <form>
+                                        <input type="text" placeholder='댓글 달기...' value={comment} onChange={onCommentHandler} />
+                                        {
+                                            comment ? <button type='submit'>게시</button> : null
+                                        }
+                                    </form>
+                                </CommentInput>
+                            </PostCommentContainer>
+                            </Container>
+                    ))
+                }
+           
         </>
     )
 }
@@ -73,6 +120,7 @@ const Container = styled.div`
     background-color: #fff;
     margin-top: 20px;
 `
+
 const UserInfo = styled.div`
     height: 60px;
     padding: 5px 10px;
@@ -86,12 +134,23 @@ const UserInfo = styled.div`
         margin-left: 10px;
         border: 1px solid lightgray;
     }
-    p{
+    
+    
+`
+const UserInfoText = styled.p`
         font-size: 14px;
         line-height: 18px;
         font-weight: 600;
         margin-left: 10px;
-    }
+`
+
+const EditPost = styled.p`
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: 600;
+        margin-left: 50px;
+        cursor: pointer;
+        color: #18a4f8;
 `
 const PostContent = styled.div`
     width: 100%;
@@ -164,6 +223,8 @@ const PostDescription = styled.div`
     }
     
 `
+
+
 const CommentInput = styled.div`
     padding: 10px 0px;
     width: 100%;
@@ -187,3 +248,4 @@ const CommentInput = styled.div`
         margin-left: 380px;
     }
 `
+

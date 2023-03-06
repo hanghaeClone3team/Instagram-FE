@@ -112,7 +112,8 @@ export default RegisterBox;
 
 
 const Wrap = styled.div `
-    width:100% height:1080px;
+    width:100%; 
+    height:1080px;
     display:flex;
     align-items: center;
     flex-direction: column;

@@ -14,7 +14,9 @@ const MainLogin = () => {
     const [cookies, setCookie] = useCookies(['authorization']);
     const myCookie = new Cookies();
     const isLogin = !!myCookie.get('authorization');
-    
+
+    const navigate = useNavigate();
+
     useEffect(()=>{
         if(isLogin) navigate('/board');
     },[])
@@ -23,13 +25,15 @@ const MainLogin = () => {
         
     }
 
-    const navigate = useNavigate();
+    
 
     const onClickLoginButton = () => {
         if(!emailValue || !pwValue) return;
         login({ email:emailValue, password:pwValue }).then((res)=>{
             const authId = res.headers.authorization
+
             setCookie("authorization", 'Bearer ' + authId);
+
             navigate('/board');
         }).catch((error)=>{
             wrongNotify();
@@ -79,7 +83,8 @@ git
 export default MainLogin
 
 const Wrap = styled.div `
-    width:80% height:1080px;
+    width:80% ;
+    height:1080px;
     display: flex;
     align-items: center;
     justify-content:space-between;
