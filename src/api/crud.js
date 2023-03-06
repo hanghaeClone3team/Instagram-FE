@@ -39,9 +39,6 @@ export const editPost = async ({postId, changePost}) => {
     await instance.patch(`api/post/${postId}`, 
     {
         content:changePost,
-        headers:{
-            Authorization : token
-        }
     }
 
     // {

@@ -19,11 +19,25 @@ function EditPostModal() {
     // if (isError) {
     //     return <h1>Error...</h1>
     // }
+
+
+
+    // 백엔드에 있는 데이터값 가져오기
+
+    // 
+    const { isLoading, isError, data } = useQuery(['post'], getPost)
     const [contents, setContents] = useState();
     const queryClient = useQueryClient()
     const params = useParams()
     console.log(params)
     console.log(contents)
+    
+
+    
+
+
+
+
     const body = {
         content:contents
       }
@@ -35,14 +49,26 @@ function EditPostModal() {
             queryClient.invalidateQueries()
         }
       })
+    if (isLoading) {
+        return <h1>로딩중...</h1>
+    }
+    if (isError) {
+        return <h1>Error...</h1>
+    }
+
+    // 특정 id값을 가진 post 가져옴
+    const forEditData = data.data.find((element) => String(element.id) === params.id)
+    console.log(forEditData)
+    console.log(forEditData.contents)
+    
       const EditPost = (e) => {
         e.preventDefault();
-     
+        forEditData.contents = contents
         editMutation.mutate({
-            postId:params.id,
-            changePost:newPostContent
+            
         })
       }
+      
   return (
     <EditPostContainer>
         <form onSubmit={EditPost}>
