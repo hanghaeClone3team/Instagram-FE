@@ -5,6 +5,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import {useEffect} from 'react';
 import styled from 'styled-components';
 import useInput from '../hooks/useInput';
+import KakaoLogin from './KakaoLogin';
 
 
 const MainLogin = () => {
@@ -31,8 +32,8 @@ const MainLogin = () => {
         login({ email:emailValue, password:pwValue }).then((res)=>{
             const authId = res.headers.authorization
 
-            setCookie("authorization",authId);
-            console.log(cookies)
+            setCookie("authorization", 'Bearer ' + authId);
+
             navigate('/board');
         }).catch((error)=>{
             wrongNotify();
@@ -47,18 +48,18 @@ const MainLogin = () => {
 
       <Right>
         <LoginBox>
-            <H1>Instagram</H1>
+            <H1></H1>
             <IdInput type="text" value={emailValue || ""} onChange={(e)=>{emailValueHandler(e)}} placeholder='사용자 이름 또는 이메일' /> <br />
             <PwInput type="password" value={pwValue || ""} onChange={(e)=>{pwValueHandler(e)}} placeholder='비밀번호'/> <br />
             <LoginBtn onClick={()=>{onClickLoginButton()}}>로그인</LoginBtn>
-
+git 
             <Or>
               <hr style={{ width:"100px", background:"gray",height:"1px",  border:"0" }}/>
               또는
               <hr style={{ width:"100px", background:"gray",height:"1px",  border:"0" }}/>
             </Or>
 
-            <KakaoBtn>카카오톡으로 로그인</KakaoBtn>
+            <KakaoLogin />
             <P1>비밀번호를 잊으셨나요?</P1>
         </LoginBox>
         

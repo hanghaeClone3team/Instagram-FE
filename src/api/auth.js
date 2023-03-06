@@ -15,7 +15,7 @@ const login = async({ email , password }) => {
 }
 
 const usernameCheck = async({ username }) => {
-    const response = await instance.post(`/api/user/id`, { username });
+    const response = await instance.post(`/api/user/checkid`, { username });
     console.log(response);
     return response;
 }
