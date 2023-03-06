@@ -1,9 +1,11 @@
 import { useEffect } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import styled from 'styled-components';
+import { SiKakaotalk } from "react-icons/si";
 
 const  KakaoLogin = () => {
     const REST_API_KEY = "ddc603749d78abff3f309e771a37719f";
-    const REDIRECT_URI = "http://3.34.133.26:8080";
+    const REDIRECT_URI = "http://localhost:3000/board";
     const KAKAO_AUTH_URL = `https://kauth.kakao.com/oauth/authorize?client_id=${REST_API_KEY}&redirect_uri=${REDIRECT_URI}&response_type=code`;
     const KakaoLoginHandler = () => {
         window.location.href = KAKAO_AUTH_URL;
@@ -35,7 +37,7 @@ const  KakaoLogin = () => {
 
   return (
     <>
-      <button onClick={KakaoLoginHandler}>카카오톡으로 로그인</button>
+      <Btn onClick={KakaoLoginHandler}><SiKakaotalk size="22" />&nbsp; 카카오톡으로 로그인</Btn>
     </>
   )
 }
@@ -43,3 +45,10 @@ const  KakaoLogin = () => {
 
 
 export default KakaoLogin
+
+
+const Btn = styled.button `
+   display:flex;
+   font-weight:bold;
+   color:#385085;
+`
