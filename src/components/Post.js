@@ -8,9 +8,14 @@ import save from '../img/save.png'
 
 
 
-function Post() {
+function Post(props) {
     const [showComment, setShowComment] = useState(false)
     const [comment, setComment] = useState();
+    
+    const showPostModal = () => {
+        props.setPostModal(true)
+      }
+
 
     const onCommentHandler = (e) => {
         setComment(e.target.value)
@@ -22,7 +27,8 @@ function Post() {
                 <UserInfo>
 
                     <img src={user} alt='유저' />
-                    <p>유저 이름</p>
+                    <UserInfoText>유저 이름</UserInfoText>
+                    <EditPost>수정</EditPost>
                 </UserInfo>
                 <PostContent>
                     <img
@@ -33,7 +39,7 @@ function Post() {
                 <PostCommentContainer>
                     <PostCommentButton>
                         <img src={like} alt="좋아요" />
-                        <img src={cmt} alt="댓글 보기" />
+                        <img src={cmt} alt="댓글 보기"  onClick={showPostModal}/>
                         <img src={post} alt="공유" />
                         <img src={save} alt="저장" />
                     </PostCommentButton>
@@ -46,15 +52,15 @@ function Post() {
                         </h5>
 
                         <div className='description_button'>
-                            <span >댓글 ~개 모두 보기</span>
+                            <span onClick={showPostModal}>댓글 ~개 모두 보기</span>
                             <p onClick={() => setShowComment(!showComment)}>더 보기</p>
                         </div>
                     </PostDescription>
                     <CommentInput>
                         <form>
-                            <input type="text" placeholder='댓글 달기...'  value={comment} onChange={onCommentHandler}/>
+                            <input type="text" placeholder='댓글 달기...' value={comment} onChange={onCommentHandler} />
                             {
-                                !comment  ? <button type='submit'>게시</button> : null 
+                                comment ? <button type='submit'>게시</button> : null
                             }
                         </form>
                     </CommentInput>
@@ -73,6 +79,7 @@ const Container = styled.div`
     background-color: #fff;
     margin-top: 20px;
 `
+
 const UserInfo = styled.div`
     height: 60px;
     padding: 5px 10px;
@@ -86,12 +93,23 @@ const UserInfo = styled.div`
         margin-left: 10px;
         border: 1px solid lightgray;
     }
-    p{
+    
+    
+`
+const UserInfoText = styled.p`
         font-size: 14px;
         line-height: 18px;
         font-weight: 600;
         margin-left: 10px;
-    }
+`
+
+const EditPost = styled.p`
+        font-size: 14px;
+        line-height: 18px;
+        font-weight: 600;
+        margin-left: 450px;
+        cursor: pointer;
+        color: #18a4f8;
 `
 const PostContent = styled.div`
     width: 100%;
@@ -164,6 +182,8 @@ const PostDescription = styled.div`
     }
     
 `
+
+
 const CommentInput = styled.div`
     padding: 10px 0px;
     width: 100%;
@@ -187,3 +207,4 @@ const CommentInput = styled.div`
         margin-left: 380px;
     }
 `
+
