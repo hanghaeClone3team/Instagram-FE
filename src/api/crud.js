@@ -9,7 +9,7 @@ console.log(token)
 
 
 export const getPost = async () => {
-    const response = await instance.get(`${process.env.REACT_APP_SERVER_URL}/api/post`)
+    const response = await instance.get(`http://52.79.210.171:8080/api/post`)
     return response
 }
 
@@ -35,5 +35,21 @@ export const deletePost = async (postId) => {
 // 인스타 post 내용 수정
 
 export const editPost = async ({postId, changePost}) => {
-    await instance.put(`api/post/${postId}`,)
+    console.log("수정내용 ", changePost)
+    await instance.patch(`api/post/${postId}`, 
+    {
+        content:changePost,
+        headers:{
+            Authorization : token
+        }
+    }
+
+    // {
+    //     headers : {
+    //         'Content-Type' : 'multipart/form-data',
+    //         
+    //     }
+    // }
+    
+    )
 }
