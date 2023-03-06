@@ -9,7 +9,7 @@ console.log(token)
 
 
 export const getPost = async () => {
-    const response = await instance.get(`http://52.79.210.171:8080/api/post`)
+    const response = await instance.get(`http://3.34.133.26:8080/api/post`)
     return response
 }
 

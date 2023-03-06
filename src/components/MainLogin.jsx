@@ -14,7 +14,7 @@ import login1 from '../img/login1.png';
 import login2 from '../img/login2.png';
 import login3 from '../img/login3.png';
 import login4 from '../img/login4.png';
-import {motion, AnimatePresence} from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 
 
 

@@ -3,6 +3,7 @@ import styled from 'styled-components'
 import logo from '../img/logo.svg'
 import home from '../img/home.png'
 import '../css/style.css'
+import Menubar from './MenuBar'
 
 
 
@@ -91,7 +92,7 @@ function Sidebar(props) {
           <button>
             <span>
               <i className="uil uil-bars"> </i>
-              <span>더보기</span>
+              <Menubar />
             </span>
           </button>
         </nav>
