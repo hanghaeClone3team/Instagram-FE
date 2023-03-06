@@ -5,7 +5,7 @@ const cookies = new Cookies();
 
 
 const instance = axios.create({
-    baseURL : 'http://52.79.210.171:8080',
+    baseURL : 'http://3.34.133.26:8080',
     headers : {Authorization : cookies.get('authorization')},
     withCredentials:true
 });

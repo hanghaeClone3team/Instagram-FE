@@ -17,11 +17,8 @@ const Router = () => {
             <Route path='/' element={<LogIn />}/>
             <Route path='/register' element={<Register />}/>
             <Route path='/board' element={<Board/>}/>
-            <Route path='/board:id' element={<SingleBoard/>}/>
-            <Route path = 'editpost/:id' element={<EditPostModal />}/>
-
-
-
+            <Route path='/board/:id' element={<SingleBoard/>}/>
+            <Route path = '/editpost/:id' element={<EditPostModal />}/>
         </Routes>
     </BrowserRouter>
   )

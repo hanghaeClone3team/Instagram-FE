@@ -44,7 +44,7 @@ const RegisterBox = () => {
     } 
 
     const onClickRegisterButton = () => {
-        if(!emailValue || !nameValue || !nicknameValue || !pwValue || !pwconfirmValue) return 
+        if(!emailValue || !nameValue || !nicknameValue || !pwValue || !pwconfirmValue) return ;
         if(pwValue === pwconfirmValue){
             register({email:emailValue ,
                       username:nameValue,

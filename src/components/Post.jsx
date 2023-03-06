@@ -6,7 +6,7 @@ import cmt from '../img/comment.png'
 import post from '../img/post.png'
 import save from '../img/save.png'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { deletePost, getPost } from '../api/crud'
+import { addComment, deletePost, getPost } from '../api/crud'
 import { token } from '../api/crud'
 import jwtDecode from 'jwt-decode'
 import PostModal from './PostModal'
@@ -18,17 +18,17 @@ function Post() {
 
 
     const [showComment, setShowComment] = useState(false)
-    const [comment, setComment] = useState();
+    const [comment, setComment] = useState("");
+    const [postId, setPostId] = useState(0)
     const [postModal, setPostModal] = useState(false);
     const [editPostModal, setEditPostModal] = useState(false)
-
+    console.log(comment, postId)
     const showPostModal = () => {
         setPostModal(true)
     }
     const showEditPostModal = () => {
         setEditPostModal(true)
     }
-
 
     const onCommentHandler = (e) => {
         setComment(e.target.value)
@@ -41,6 +41,12 @@ function Post() {
             queryClient.invalidateQueries('post')
         }
     })
+
+    const addCommentMutation = useMutation(addComment, {
+        onSuccess : () => {
+            queryClient.invalidateQueries('post')
+        }
+    })
     if (isLoading) {
         return <h1>로딩중...</h1>
     }
@@ -49,12 +55,21 @@ function Post() {
     }
     
     const decode_token = jwtDecode(token)
-    console.log(decode_token)
+
 
     const onDeletePostHandler = (postId) => {
         alert("정말로 삭제하시겠습니까?")
         deletePostMutation.mutate(postId)
     }
+    const onAddCommentHanlder = (e, id) => {
+        e.preventDefault()
+        
+        addCommentMutation.mutate({
+            postId : id,
+            newComment : comment
+        })
+    }
+   
     console.log(data.data)
     return (
         <>
@@ -69,7 +84,9 @@ function Post() {
                                 {
                                     decode_token.sub === item.username ? <button onClick={() => {onDeletePostHandler(item.id)}}>삭제</button> : null
                                 }
-                                <EditPost><Link to={`/editpost/${item.id}`}>수정</Link></EditPost>
+                                {
+                                    decode_token.sub === item.username ? <EditPost><Link to={`/editpost/${item.id}`}>수정</Link></EditPost> : null
+                                }
                                 
                             </UserInfo>
                             <PostContent>
@@ -99,11 +116,9 @@ function Post() {
                                     </div>
                                 </PostDescription>
                                 <CommentInput>
-                                    <form>
-                                        <input type="text" placeholder='댓글 달기...' value={comment} onChange={onCommentHandler} />
-                                        {
-                                            comment ? <button type='submit'>게시</button> : null
-                                        }
+                                    <form onSubmit={() => {onAddCommentHanlder(item.id)}}>
+                                        
+                                        <Link to={`/board/${item.id}`}>댓글 달기</Link>
                                     </form>
                                 </CommentInput>
                             </PostCommentContainer>
@@ -125,6 +140,9 @@ function Post() {
 
 export default Post
 
+const HideInput = styled.input`
+    display:none;
+`
 const Container = styled.div`
     height: fit-content;
     width: 100%;

@@ -20,7 +20,7 @@ function Sidebar(props) {
     return () => {
       document.head.removeChild(css);
     }
-  })
+  }, [])
 
   const showModal = () => {
     props.setModal(true)
