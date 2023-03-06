@@ -7,6 +7,7 @@ import styled from 'styled-components'
 import { useState } from 'react'
 import Modal from '../components/Modal'
 import PostModal from '../components/PostModal'
+import EditPostModal from '../components/EditPostModal'
 
 
 
@@ -17,19 +18,19 @@ import PostModal from '../components/PostModal'
 function Board() {
   const [modal, setModal] = useState(false)
   const [postModal, setPostModal] = useState(false);
+  const [editPostModal, setEditPostModal] = useState(false)
   return (
     <>
 
       <Sidebar setModal={setModal} />
-      <div>추가용 테스트 123 1123123</div>
-
+      
 
 
       {/* 중앙 post 영역 */}
       <InnerContainer>
         <InnerMainContainer>
           <PostContainer>
-            <Post setPostModal={setPostModal}/>
+            <Post setPostModal={setPostModal} setEditPostModal={setEditPostModal}/>
             
           </PostContainer>
         </InnerMainContainer>
@@ -43,6 +44,9 @@ function Board() {
       }
       {
         postModal && <PostModal setPostModal={setPostModal}/>
+      }
+      {
+        editPostModal && <EditPostModal setEditPostModal={setEditPostModal}/>
       }
       </div>
 
