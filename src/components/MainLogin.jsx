@@ -44,11 +44,11 @@ const MainLogin = () => {
 
       <Right>
         <LoginBox>
-            <H1>Instagram</H1>
+            <H1></H1>
             <IdInput type="text" value={emailValue || ""} onChange={(e)=>{emailValueHandler(e)}} placeholder='사용자 이름 또는 이메일' /> <br />
             <PwInput type="password" value={pwValue || ""} onChange={(e)=>{pwValueHandler(e)}} placeholder='비밀번호'/> <br />
             <LoginBtn onClick={()=>{onClickLoginButton()}}>로그인</LoginBtn>
-
+git 
             <Or>
               <hr style={{ width:"100px", background:"gray",height:"1px",  border:"0" }}/>
               또는
