@@ -10,11 +10,11 @@ import Logo from '../img/logo.svg'
 import { FcGoogle } from "react-icons/fc";
 import { AiFillApple } from "react-icons/ai";
 
-// import leftbox from '../img/leftbox.png';
-// import login1 from '../img/login1.png';
-// import login2 from '../img/login2.png';
-// import login3 from '../img/login3.png';
-// import login4 from '../img/login4.png';
+import leftbox from '../img/leftbox.png';
+import login1 from '../img/login1.png';
+import login2 from '../img/login2.png';
+import login3 from '../img/login3.png';
+import login4 from '../img/login4.png';
 import {motion, AnimatePresence} from 'framer-motion'
 
 
@@ -29,7 +29,7 @@ const MainLogin = () => {
 
     const navigate = useNavigate();
 
-    // const [imgArr, setImgArr] = useState([login1, login2, login3, login4]);
+    const [imgArr, setImgArr] = useState([login1, login2, login3, login4]);
     const [imgIndex, setImgIndex] = useState(0);
 
 
@@ -56,28 +56,28 @@ const MainLogin = () => {
         })
     }
 
-    // useEffect(()=>{
-    //     const ref = setInterval(changeImg, 2000);
+    useEffect(()=>{
+        const ref = setInterval(changeImg, 2000);
 
-    //     return () => clearInterval(ref);
-    // },[])
+        return () => clearInterval(ref);
+    },[])
 
-    // const changeImg = () => {
-    //     setImgIndex((prev) => {
-    //         if(prev >= imgArr.length - 1) return 0;
+    const changeImg = () => {
+        setImgIndex((prev) => {
+            if(prev >= imgArr.length - 1) return 0;
     
-    //         return prev + 1;
-    //     })
-    // }
+            return prev + 1;
+        })
+    }
   return (
     <Wrap>
       <Left>
-        {/* <Phone>
+        <Phone>
             <PhoneImg src={leftbox} alt="phone" />
             <AnimatePresence>            
                 {imgArr.map((v, i) => imgIndex === i && <PhoneContentImg variants={imgVariants} initial="from" animate="to" exit="exit" src={v} />)} 
             </AnimatePresence>
-        </Phone> */}
+        </Phone>
       </Left>
 
       <Right>

@@ -2,6 +2,8 @@
     --bg-color:white;
     --font-color:rgb(0, 0, 0);
     --btncolor:rgb(255, 255, 255);
+    --border:#d4d4d4;
+    --btnfont:white;
 }
 
 html.dark {
@@ -9,6 +11,7 @@ html.dark {
     --font-color:#ffffff;
     --btncolor:rgb(0, 0, 0);
     --border:#313131;
+    --btnfont:black;
 }
 
 
