@@ -7,9 +7,10 @@ import { Cookies } from "react-cookie";
 
 
 export const getPost = async () => {
-    
+
     const response = await instance.get(`/api/post`)
     
+
     return response
 }
 

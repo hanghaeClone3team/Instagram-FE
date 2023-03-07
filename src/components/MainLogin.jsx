@@ -9,6 +9,7 @@ import KakaoLogin from './KakaoLogin';
 import Logo from '../img/logo.svg'
 import { FcGoogle } from "react-icons/fc";
 import { AiFillApple } from "react-icons/ai";
+
 // import leftbox from '../img/leftbox.png';
 // import login1 from '../img/login1.png';
 // import login2 from '../img/login2.png';
@@ -157,7 +158,7 @@ const Left = styled.div `
     flex-direction: column;
     justify-content: center;
     box-sizing: border-box;
-    padding-left:33%;
+    padding-left:50%;
     margin-top:180px;
 `
 
@@ -169,7 +170,7 @@ const Right = styled.div `
     justify-content: center;
     width:50%; height:800px;
     box-sizing: border-box;
-    padding-right:33%;
+    padding-right:5%;
     margin-top:180px;
 `
 

@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import user from '../img/user.webp'
@@ -14,7 +15,12 @@ import jwtDecode from 'jwt-decode'
 import { Link, useParams } from 'react-router-dom'
 
 
+import Sidebar from '../components/Sidebar'
+
+
+
 function SingleBoard() {
+
 
     const params = useParams()
     console.log(params)
@@ -157,6 +163,7 @@ function SingleBoard() {
                 
         </>
     )
+
 }
 
 export default SingleBoard
