@@ -8,7 +8,6 @@ const LikeCount = () => {
 
   return (
     <Wrap>
-      <h3>{}</h3>
       <span onClick={() => { setLike(like +1); }} > <AiFillHeart size="28" color="red"/> </span>
       <P>좋아요 &nbsp;<P2>{like}</P2></P>
     </Wrap>
@@ -20,6 +19,7 @@ export default LikeCount
 const Wrap = styled.div `
   position:relative;
   top:28px; left:20px;
+  cursor:pointer;
 `
 
 

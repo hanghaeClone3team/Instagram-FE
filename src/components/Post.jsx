@@ -13,6 +13,7 @@ import PostModal from './PostModal'
 import EditPostModal from './EditPostModal'
 import { Link, useLocation } from 'react-router-dom'
 import LikeCountAcction from '../components/LikeCountAction';
+import FollowContents from '../components/FollowContents';
 
 
 function Post() {
@@ -93,6 +94,7 @@ function Post() {
                                 {
                                     decode_token.sub === item.username ? <button onClick={() => {onDeletePostHandler(item.id)}}>삭제</button> : null
                                 }
+                                <FollowContents />
                                 {
                                     decode_token.sub === item.username ? <EditPost><Link to={`/editpost/${item.id}`}>수정</Link></EditPost> : null
                                 }
@@ -199,7 +201,7 @@ const EditPost = styled.p`
         font-size: 14px;
         line-height: 18px;
         font-weight: 600;
-        margin-left: 50px;
+        margin-left: 20px;
         cursor: pointer;
         color: #18a4f8;
 `
