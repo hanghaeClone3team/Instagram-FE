@@ -29,9 +29,7 @@ function EditPostModal() {
     const [contents, setContents] = useState("");
     const queryClient = useQueryClient()
     const params = useParams()
-    console.log(params)
-    console.log(contents)
-    
+   
 
     
 
@@ -54,7 +52,7 @@ function EditPostModal() {
     // 특정 id값을 가진 post 가져옴
     const forEditData = data.data.find((element) => String(element.id) === params.id)
     console.log(forEditData)
-    console.log(forEditData.contents)
+    
     const body = {
       content:contents
     }
@@ -67,7 +65,7 @@ function EditPostModal() {
         data.append("postRequestDto", newPostContent)
         editMutation.mutate({
           postId:params.id,
-          changePost:data
+          postRequestDto:body
         })
       }
       

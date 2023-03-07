@@ -11,12 +11,12 @@ import { token } from '../api/crud'
 import jwtDecode from 'jwt-decode'
 import PostModal from './PostModal'
 import EditPostModal from './EditPostModal'
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 
 
 function Post() {
 
-
+    const location = useLocation();
     const [showComment, setShowComment] = useState(false)
     const [comment, setComment] = useState("");
     const [postModal, setPostModal] = useState(false);
@@ -53,7 +53,7 @@ function Post() {
         return <h1>Error...</h1>
     }
     
-    const decode_token = jwtDecode(token)
+    
 
 
     const onDeletePostHandler = (postId) => {
@@ -69,7 +69,7 @@ function Post() {
         })
     }
    
-    console.log(data.data)
+    const decode_token = jwtDecode(token)
     return (
         <>
             
@@ -110,7 +110,7 @@ function Post() {
                                     </h5>
 
                                     <div className='description_button'>
-                                        <span onClick={showPostModal}>댓글 ~개 모두 보기</span>
+                                        <Link to='/postmodal' state={{background:location}}><span onClick={showPostModal}>상세보기</span></Link>
                                         <p onClick={() => setShowComment(!showComment)}>더 보기</p>
                                     </div>
                                 </PostDescription>

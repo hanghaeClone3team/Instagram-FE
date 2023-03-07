@@ -1,10 +1,16 @@
 import React from 'react'
+import { useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 
 
 
 // 게시글 상세 페이지 모달로 띄우기
 function PostModal(props) {
+    const postModal = props.post
+    console.log(postModal)
+
+    const location = useLocation();
+    console.log(location)
     const closePostModal = () => {
         props.setPostModal(false)
     }
@@ -12,7 +18,7 @@ function PostModal(props) {
         <PostModalBackground onClick={closePostModal}>
             <PostModalPadding>
                 <PostModalContainer>
-
+                   
                 </PostModalContainer>
             </PostModalPadding>
         </PostModalBackground>

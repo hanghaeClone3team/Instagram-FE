@@ -12,7 +12,7 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <CookiesProvider>
           <DarkModeProvider>
-            <Router />
+            <Router/>
             </DarkModeProvider>
         </CookiesProvider>
       </QueryClientProvider>

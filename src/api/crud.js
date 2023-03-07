@@ -35,11 +35,12 @@ export const deletePost = async (postId) => {
 
 // 인스타 post 내용 수정
 
-export const editPost = async ({postId, changePost}) => {
-    console.log("수정내용 ", changePost)
-    await instance.patch(`/api/post/${postId}`, changePost,{
+export const editPost = async ({postId, postRequestDto}) => {
+    console.log("수정내용 ", postRequestDto)
+    await instance.patch(`/api/post/${postId}`, postRequestDto,
+    {
         headers : {
-            'Content-Type' : 'application/json',
+            "Content-Type":"application/json",
             Authorization : token
         }
     }    )
