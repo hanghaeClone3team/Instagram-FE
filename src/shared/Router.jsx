@@ -12,20 +12,19 @@ import PostModal from '../components/PostModal';
 
 
 const Router = () => {
-  const location = useLocation();
-  const background = location.state && location.state.background;
+  
   return (
-    
-        <Routes location={!background || location}>
+    <BrowserRouter>
+        <Routes >
             <Route path='/' element={<LogIn />}/>
             <Route path='/register' element={<Register />}/>
-            <Route path='/board' element={<Board/>}>
-              {background &&  <Route path='boardmodal' element={<PostModal />}/>}
-            </Route>
+            <Route path='/board' element={<Board/>}/>
+            <Route path='/postmodal/:id' element={<PostModal />}/>
             <Route path='/board/:id' element={<SingleBoard/>}/>
             <Route path = '/editpost/:id' element={<EditPostModal />}/>
+            
         </Routes>
-   
+    </BrowserRouter>
   )
 }
 

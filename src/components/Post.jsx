@@ -16,21 +16,39 @@ import { Link, useLocation } from 'react-router-dom'
 
 function Post() {
 
-    const location = useLocation();
+    
     const [showComment, setShowComment] = useState(false)
-    const [comment, setComment] = useState("");
+    
+    const [comment, setComment] = useState([]);
+    const [contents, setContents] = useState("")
+    const [useName, setUserName] = useState("")
+    const [imgUrl, setImgUrl] = useState("")
+    const [id, setId] = useState(0)
     const [postModal, setPostModal] = useState(false);
     const [editPostModal, setEditPostModal] = useState(false)
     
     const showPostModal = () => {
         setPostModal(true)
     }
-    const showEditPostModal = () => {
+    
+     const showEditPostModal = () => {
         setEditPostModal(true)
     }
 
-    const onCommentHandler = (e) => {
-        setComment(e.target.value)
+    const onComment = (newComment) => {
+        setComment(newComment)
+    }
+    const onContents = (newContents) => {
+        setContents(newContents)
+    }
+    const onUserName = (newName) => {
+        setUserName(newName)
+    }
+    const onUrl = (newUrl) => {
+        setImgUrl(newUrl)
+    }
+    const onId = (newId) => {
+        setId(newId)
     }
     const { isLoading, isError, data } = useQuery(['post'], getPost)
     const queryClient = useQueryClient();
@@ -41,18 +59,14 @@ function Post() {
         }
     })
 
-    const addCommentMutation = useMutation(addComment, {
-        onSuccess : () => {
-            queryClient.invalidateQueries('post')
-        }
-    })
+
     if (isLoading) {
         return <h1>로딩중...</h1>
     }
     if (isError) {
         return <h1>Error...</h1>
     }
-    
+    console.log(data.data)
     
 
 
@@ -60,22 +74,17 @@ function Post() {
         alert("정말로 삭제하시겠습니까?")
         deletePostMutation.mutate(postId)
     }
-    const onAddCommentHanlder = (e, id) => {
-        e.preventDefault()
-        
-        addCommentMutation.mutate({
-            postId : id,
-            newComment : comment
-        })
-    }
+  
    
     const decode_token = jwtDecode(token)
     return (
         <>
             
                 {
-                    data.data.map((item) => (
+                    data.data.map((item,i) => (
+                       
                         <Container key = {item.id}>
+                            
                             <UserInfo>
 
                                 <img src={user} alt='유저' />
@@ -97,7 +106,14 @@ function Post() {
                             <PostCommentContainer>
                                 <PostCommentButton>
                                     <img src={like} alt="좋아요" />
-                                    <img src={cmt} alt="댓글 보기" onClick={showPostModal} />
+                                    <img src={cmt} alt="댓글 보기" onClick={() => {
+                                        onId(item.id)
+                                        onComment(item.comments);
+                                        onContents(item.contents)
+                                        onUserName(item.username)
+                                        onUrl(item.imageUrl)
+                                        showPostModal()
+                                    }} />
                                     <img src={post} alt="공유" />
                                     <img src={save} alt="저장" />
                                 </PostCommentButton>
@@ -110,21 +126,25 @@ function Post() {
                                     </h5>
 
                                     <div className='description_button'>
-                                        <Link to='/postmodal' state={{background:location}}><span onClick={showPostModal}>상세보기</span></Link>
+                                    <span onClick={() => {
+                                        onComment(item.comments);
+                                        onContents(item.contents)
+                                        onUserName(item.username)
+                                        onUrl(item.imageUrl)
+                                        showPostModal()
+                                    }}>상세보기</span>
                                         <p onClick={() => setShowComment(!showComment)}>더 보기</p>
                                     </div>
                                 </PostDescription>
                                 <CommentInput>
-                                    <form onSubmit={() => {onAddCommentHanlder(item.id)}}>
+                                    <form>
                                         
                                         <Link to={`/board/${item.id}`}>댓글 달기</Link>
                                     </form>
                                 </CommentInput>
                             </PostCommentContainer>
                             <div>
-        {
-            postModal && <PostModal setPostModal={setPostModal} post={item}/> 
-        }
+       
         {/* {
           editPostModal && <EditPostModal setEditPostModal={setEditPostModal} post={item}/> 
         } */}
@@ -133,6 +153,9 @@ function Post() {
                         
                     ))
                 }
+        {
+            postModal && <PostModal setPostModal={setPostModal} comment={comment} contents={contents} useName={useName} imgUrl={imgUrl} id={id}/> 
+        }
         </>
     )
 }
