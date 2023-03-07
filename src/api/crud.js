@@ -5,7 +5,7 @@ import { Cookies } from "react-cookie";
 
 
 
-// 이게 문제
+
 export const getPost = async () => {
     
     const response = await instance.get(`/api/post`)
@@ -36,19 +36,18 @@ export const deletePost = async (postId) => {
 
 export const editPost = async ({postId, changePost}) => {
     console.log("수정내용 ", changePost)
-    await instance.patch(`/api/post/${postId}`, 
-    {
-        content:changePost,
-    }
+    await instance.patch(`/api/post/${postId}`, changePost,{
+        headers : {
+            'Content-Type' : 'application/json',
+            Authorization : token
+        }
+    }    )
+}
 
-    // {
-    //     headers : {
-    //         'Content-Type' : 'multipart/form-data',
-    //         
-    //     }
-    // }
-    
-    )
+// 인스타 post 좋아요
+
+export const likePost = async (postId) => {
+    await instance.post(`/api/post/${postId}`)
 }
 
 // 상세 게시글 가져오기

@@ -145,9 +145,9 @@ function SingleBoard() {
         } */}
         {
           data.data.comments.map((item) => (
-            <div key={item.id}>
+            <div key={item.comment_id}>
               <p>{item.comments}</p>
-              <button onClick={() => {onDeleteCommentHandler({boardId:params.id, commentId:item.id})}}>삭제</button>
+              <button onClick={() => {onDeleteCommentHandler({boardId:params.id, commentId:item.comment_id})}}>삭제</button>
             </div>
           ))
         }

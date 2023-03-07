@@ -26,7 +26,7 @@ function EditPostModal() {
 
     // 
     const { isLoading, isError, data } = useQuery(['post'], getPost)
-    const [contents, setContents] = useState();
+    const [contents, setContents] = useState("");
     const queryClient = useQueryClient()
     const params = useParams()
     console.log(params)
@@ -38,12 +38,7 @@ function EditPostModal() {
 
 
 
-    const body = {
-        content:contents
-      }
-      const newPostContent = new Blob([JSON.stringify(body)], {
-        type: "application/json"
-      })
+   
       const editMutation = useMutation(editPost, {
         onSuccess : () => {
             queryClient.invalidateQueries()
@@ -60,12 +55,19 @@ function EditPostModal() {
     const forEditData = data.data.find((element) => String(element.id) === params.id)
     console.log(forEditData)
     console.log(forEditData.contents)
-    
+    const body = {
+      content:contents
+    }
+    const newPostContent = new Blob([JSON.stringify(body)], {
+      type: "application/json"
+    })
       const EditPost = (e) => {
         e.preventDefault();
-        forEditData.contents = contents
+        const data = new FormData()
+        data.append("postRequestDto", newPostContent)
         editMutation.mutate({
-            
+          postId:params.id,
+          changePost:data
         })
       }
       

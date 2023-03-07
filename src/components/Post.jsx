@@ -19,10 +19,9 @@ function Post() {
 
     const [showComment, setShowComment] = useState(false)
     const [comment, setComment] = useState("");
-    const [postId, setPostId] = useState(0)
     const [postModal, setPostModal] = useState(false);
     const [editPostModal, setEditPostModal] = useState(false)
-    console.log(comment, postId)
+    
     const showPostModal = () => {
         setPostModal(true)
     }
