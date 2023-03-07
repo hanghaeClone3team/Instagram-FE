@@ -11,7 +11,7 @@ import { AiFillApple } from "react-icons/ai";
 const RegisterBox = () => {
     const [emailValue, emailValueHandler] = useInput();
     const [nameValue, NameValueHandler] = useInput();
-    const [nicknameValue, nicknameValueHandler] = useInput();
+    const [usernameValue, usernameValueHandler] = useInput();
     const [pwValue, pwValueHandler] = useInput();
     const [pwconfirmValue, pwconfirmValueHandler] = useInput();
 
@@ -44,11 +44,11 @@ const RegisterBox = () => {
     } 
 
     const onClickRegisterButton = () => {
-        if(!emailValue || !nameValue || !nicknameValue || !pwValue || !pwconfirmValue) return ;
+        if(!emailValue || !nameValue || !usernameValue || !pwValue || !pwconfirmValue) return ;
         if(pwValue === pwconfirmValue){
             register({email:emailValue ,
-                      username:nameValue,
-                      nickname:nicknameValue,
+                      nickname:nameValue,
+                      username:usernameValue,
                       password:pwValue,
                       password2:pwconfirmValue
                     }).then((res) => {
@@ -63,7 +63,7 @@ const RegisterBox = () => {
     }
 
     const checkNickname = () => {
-        usernameCheck({ username:nicknameValue }).then((res)=>{
+        usernameCheck({ username:usernameValue }).then((res)=>{
             alert('사용 가능한 이름입니다.');
         }).catch((error)=>{
             console.log(error);
@@ -85,7 +85,7 @@ const RegisterBox = () => {
             </Or>
             <IdInput type="text" onBlur={checkEmail} value={emailValue || ""} onChange={(e)=>{emailValueHandler(e)}} placeholder='이메일 주소' /> <br />
             <NameInput type="text" onBlur={checkName} value={nameValue || ""} onChange={(e)=>{NameValueHandler(e)}} placeholder='성명' /> <br />
-            <UsernameInput type="text" onBlur={checkUsername} value={nicknameValue || ""} onChange={(e)=>{nicknameValueHandler(e)}} placeholder='사용자 이름'/> <br />
+            <UsernameInput type="text" onBlur={checkUsername} value={usernameValue || ""} onChange={(e)=>{usernameValueHandler(e)}} placeholder='사용자 이름'/> <br />
             <CheckBtn onClick={checkNickname}>중복 확인</CheckBtn>
             <PwInput type="password" onBlur={checkPw} value={pwValue || ""} onChange={(e)=>{pwValueHandler(e)}} placeholder='비밀번호'/> <br />
             <PwConfirmInput type="password" value={pwconfirmValue || ""} onChange={(e)=>{pwconfirmValueHandler(e)}} placeholder='비밀번호 확인'/> <br />
