@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from 'react'
-import styled from 'styled-components'
-import logo from '../img/logo.svg'
-import home from '../img/home.png'
-import '../css/style.css'
-import Menubar from './MenuBar'
-import { Link } from 'react-router-dom'
+import React, { useEffect, useState } from 'react';
+import styled from 'styled-components';
+import logo from '../img/logo.svg';
+import home from '../img/home.png';
+import '../css/style.css';
+import Menubar from './MenuBar';
+import { Link } from 'react-router-dom';
+import profile from '../img/profile.png';
 
 function Sidebar(props) {
   console.log(props)
@@ -26,17 +27,21 @@ function Sidebar(props) {
   return (
       <aside className="sidebar">
         <header className="sidebar-header">
-          <img className="logo-img" src={logo} alt="instagram"/>
-          <i className="logo-icon uil uil-instagram"></i>
+          <Link to="/board">
+            <img className="logo-img" src={logo} alt="instagram"/>
+            <i className="logo-icon uil uil-instagram"></i>
+          </Link>
         </header>
         <nav>
 
-          <button>
-            <span>
-              <i className="uil uil-estate"></i>
-              <span>홈</span>
-            </span>
-          </button>
+          <Link to="/board">
+            <button>
+              <span>
+                <i className="uil uil-estate"></i>
+                <span>홈</span>
+              </span>
+            </button>
+          </Link>
 
           <button>
             <span>
@@ -81,6 +86,7 @@ function Sidebar(props) {
         <Link to="/my_page">
           <button>
             <span>
+              <img src={profile} />
               <span>프로필</span>
             </span>
           </button>
