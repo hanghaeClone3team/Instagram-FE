@@ -6,9 +6,7 @@ import Register from '../pages/Register';
 import Board from '../pages/Board';
 import SingleBoard from '../pages/SingleBoard';
 import EditPostModal from '../components/EditPostModal';
-
 import PostModal from '../components/PostModal';
-
 import MyPage from '../pages/MyPage';
 
 

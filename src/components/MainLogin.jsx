@@ -18,7 +18,6 @@ import login4 from '../img/login4.png';
 import {motion, AnimatePresence} from 'framer-motion'
 
 
-
 const MainLogin = () => {
     const [emailValue , emailValueHandler] = useInput();
     const [pwValue, pwValueHandler] = useInput();
@@ -40,8 +39,6 @@ const MainLogin = () => {
     const wrongNotify = () => {
         
     }
-
-    
 
     const onClickLoginButton = () => {
         if(!emailValue || !pwValue) return;
@@ -69,6 +66,8 @@ const MainLogin = () => {
             return prev + 1;
         })
     }
+
+
   return (
     <Wrap>
       <Left>

@@ -14,4 +14,7 @@ html.dark {
     --btnfont:black;
 }
 
+@tailwind base;
+@tailwind components;
+@tailwind utilities
 
