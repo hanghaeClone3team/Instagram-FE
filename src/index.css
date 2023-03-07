@@ -1,3 +1,17 @@
+:root{
+    --bg-color:white;
+    --font-color:rgb(0, 0, 0);
+    --btncolor:rgb(255, 255, 255);
+}
+
+html.dark {
+    background:#000000;
+    --font-color:#ffffff;
+    --btncolor:rgb(0, 0, 0);
+    --border:#313131;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities
+

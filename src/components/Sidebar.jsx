@@ -5,10 +5,6 @@ import home from '../img/home.png'
 import '../css/style.css'
 import Menubar from './MenuBar'
 
-
-
-
-
 function Sidebar(props) {
   console.log(props)
   useEffect(() => {
@@ -27,7 +23,6 @@ function Sidebar(props) {
     props.setModal(true)
   }
   return (
-    <>
       <aside className="sidebar">
         <header className="sidebar-header">
           <img className="logo-img" src={logo} alt="instagram"/>
@@ -91,14 +86,11 @@ function Sidebar(props) {
 
           <button>
             <span>
-              <i className="uil uil-bars"> </i>
               <Menubar />
             </span>
           </button>
         </nav>
       </aside>
-      
-    </>
   )
 }
 

@@ -157,7 +157,7 @@ const Left = styled.div `
     flex-direction: column;
     justify-content: center;
     box-sizing: border-box;
-    padding-left:33%;
+    padding-left:50%;
     margin-top:180px;
 `
 
@@ -169,7 +169,7 @@ const Right = styled.div `
     justify-content: center;
     width:50%; height:800px;
     box-sizing: border-box;
-    padding-right:33%;
+    padding-right:5%;
     margin-top:180px;
 `
 
