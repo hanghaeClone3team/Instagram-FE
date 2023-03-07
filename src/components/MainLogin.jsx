@@ -9,6 +9,7 @@ import KakaoLogin from './KakaoLogin';
 import Logo from '../img/logo.svg'
 import { FcGoogle } from "react-icons/fc";
 import { AiFillApple } from "react-icons/ai";
+
 import leftbox from '../img/leftbox.png';
 import login1 from '../img/login1.png';
 import login2 from '../img/login2.png';
@@ -24,8 +25,13 @@ const MainLogin = () => {
     const [cookies, setCookie] = useCookies(['authorization']);
     const myCookie = new Cookies();
     const isLogin = !!myCookie.get('authorization');
+
+
+    const navigate = useNavigate();
+
     const [imgArr, setImgArr] = useState([login1, login2, login3, login4]);
     const [imgIndex, setImgIndex] = useState(0);
+
 
     useEffect(()=>{
         if(isLogin) navigate('/board');
@@ -35,13 +41,15 @@ const MainLogin = () => {
         
     }
 
-    const navigate = useNavigate();
+    
 
     const onClickLoginButton = () => {
         if(!emailValue || !pwValue) return;
         login({ email:emailValue, password:pwValue }).then((res)=>{
-            const authId = res.headers.authorization
-            setCookie("authorization", 'Bearer ' + authId);
+            const authId = res.headers.authorization;
+
+            setCookie("authorization", authId);
+
             navigate('/board');
         }).catch((error)=>{
             wrongNotify();
@@ -134,7 +142,8 @@ const PhoneContentImg = styled(motion.img)`
 `
 
 const Wrap = styled.div `
-    width:80% height:1080px;
+    width:80% ;
+    height:1080px;
     display: flex;
     align-items: center;
     justify-content:space-between;
@@ -149,7 +158,7 @@ const Left = styled.div `
     flex-direction: column;
     justify-content: center;
     box-sizing: border-box;
-    padding-left:33%;
+    padding-left:50%;
     margin-top:180px;
 `
 
@@ -161,7 +170,7 @@ const Right = styled.div `
     justify-content: center;
     width:50%; height:800px;
     box-sizing: border-box;
-    padding-right:33%;
+    padding-right:5%;
     margin-top:180px;
 `
 
