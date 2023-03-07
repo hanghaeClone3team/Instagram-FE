@@ -4,6 +4,7 @@ import logo from '../img/logo.svg'
 import home from '../img/home.png'
 import '../css/style.css'
 import Menubar from './MenuBar'
+import { Link } from 'react-router-dom'
 
 function Sidebar(props) {
   console.log(props)
@@ -77,13 +78,14 @@ function Sidebar(props) {
             </span>
           </button>
 
+        <Link to="/my_page">
           <button>
             <span>
-
               <span>프로필</span>
             </span>
           </button>
-
+        </Link>
+     
           <button>
             <span>
               <Menubar />
