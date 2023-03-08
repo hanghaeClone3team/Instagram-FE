@@ -13,6 +13,7 @@ const  KakaoLogin = () => {
     const location = useLocation();
     const KAKAO_CODE= location.search.split('=')[1];
     const navigate = useNavigate();
+    const IP = "http://localhost:3000"
 
     const getKakaoToken = () => {
       fetch(`https://kauth.kakao.com/oauth/token`,{
@@ -30,10 +31,24 @@ const  KakaoLogin = () => {
       });
     }
 
+    
     useEffect(()=>{
       if(!location.search) return;
       getKakaoToken();
     },[]);
+
+    useEffect(()=>{
+      fetch(`http://${IP}/api/user/kakao/callback&redirect?code=${KAKAO_CODE}`, {
+        method:"GET",
+      })
+      .then(res => res.json())
+      .then(data => {
+        localStorage.setItem('token', data.token);
+        // navigate('/board');
+      });
+    }, []);
+
+
 
   return (
     <>
