@@ -133,7 +133,7 @@ function Post() {
                             </PostContent>
                             <PostCommentContainer>
                                 <PostCommentButton>
-                                    <img src={like} alt="좋아요" />
+                                    {/* <img src={like} alt="좋아요" /> */}
                                     <LikeCountAcction />
                                     <img src={cmt} alt="댓글 보기" onClick={() => {
                                         onId(item.id)
