@@ -5,16 +5,15 @@ import like from '../img/like.png'
 import cmt from '../img/comment.png'
 import post from '../img/post.png'
 import save from '../img/save.png'
-import { useMutation, useQuery, useQueryClient } from 'react-query'
+import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from 'react-query'
 import { addComment, deletePost, getPost } from '../api/crud'
 import { token } from '../api/crud'
 import jwtDecode from 'jwt-decode'
 import PostModal from './PostModal'
 import EditPostModal from './EditPostModal'
 import { Link, useLocation } from 'react-router-dom'
-
-
-
+import { useInView } from 'react-intersection-observer'
+import instance from '../api/instance/instance'
 import LikeCountAcction from '../components/LikeCountAction';
 import FollowContents from '../components/FollowContents';
 
@@ -32,7 +31,7 @@ function Post() {
     const [id, setId] = useState(0)
     const [postModal, setPostModal] = useState(false);
     const [editPostModal, setEditPostModal] = useState(false)
-    
+    const {ref, inView} = useInView();
    
     
     const showPostModal = () => {
@@ -58,7 +57,27 @@ function Post() {
     const onId = (newId) => {
         setId(newId)
     }
+
+    // const { isLoading, isError, data, error, hasNextPage} = useInfiniteQuery(
+    //     ['post'], 
+    //     getPost,
+    //     {
+    //         getNextPageParam :(_lastPage, pages) => {
+    //             if(pages.length < 4){
+    //                 return pages.length + 1
+    //             }else{
+    //                 return undefined
+    //             }
+    //         },
+    //     }
+        
+    // )
+    
     const { isLoading, isError, data } = useQuery(['post'], getPost)
+
+    
+
+
     const queryClient = useQueryClient();
 
     const deletePostMutation = useMutation(deletePost, {
@@ -114,7 +133,7 @@ function Post() {
                             </PostContent>
                             <PostCommentContainer>
                                 <PostCommentButton>
-                                    {/* <img src={like} alt="좋아요" /> */}
+                                    <img src={like} alt="좋아요" />
                                     <LikeCountAcction />
                                     <img src={cmt} alt="댓글 보기" onClick={() => {
                                         onId(item.id)

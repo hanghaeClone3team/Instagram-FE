@@ -4,15 +4,19 @@ import { Cookies } from "react-cookie";
 
 
 
+// export const getPost = async ({pageParam = 1}) => {
+//     const response = await instance.get(`/api/post?_limit=2@_page${pageParam}`)
+//     return response
+// }
 
 
+
+// 인스타 post 가져오기
 export const getPost = async () => {
-
     const response = await instance.get(`/api/post`)
-    
-
     return response
 }
+
 
 
 // 인스타 post 추가
