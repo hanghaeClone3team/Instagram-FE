@@ -75,7 +75,7 @@ const MainLogin = () => {
         <Phone>
             <PhoneImg src={leftbox} alt="phone" />
             <AnimatePresence>            
-                {imgArr.map((v, i) => imgIndex === i && <PhoneContentImg variants={imgVariants} initial="from" animate="to" exit="exit" src={v} />)} 
+                {imgArr.map((v, i) => imgIndex === i && <PhoneContentImg variants={imgVariants} initial="from" animate="to" exit="exit" src={v} key={i}/>)} 
             </AnimatePresence>
         </Phone>
       </Left>
