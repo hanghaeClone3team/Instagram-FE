@@ -1,36 +1,56 @@
-import React, { useState } from 'react'
+import React from 'react';
 import { AiOutlineHeart } from "react-icons/ai";
 import { AiFillHeart } from "react-icons/ai";
 import styled from 'styled-components';
 
-const LikeCount = () => {
-    let [like, setLike] = useState(0);
+class LikeCount extends React.Component{
+  state = {
+      isChecked: false,
+      notice: ' ',
+  };
 
-  return (
-    <Wrap>
-      <span onClick={() => { setLike(like +1); }} > <AiFillHeart size="28" color="red"/> </span>
-      <P>좋아요 &nbsp;<P2>{like}</P2></P>
-    </Wrap>
-  )
+  onClick = () => {
+      this.state.isChecked ?
+      this.setState({
+          isChecked: false,
+          notice: '',
+      })
+      :
+      this.setState({
+          isChecked: true,
+          notice: '좋아요 1회',
+      });
+  }
+  render(){
+      return(
+          <React.Fragment>
+              <Wrap>
+                  {this.state.isChecked ?  
+                  <AiFillHeart size="30" color="red" onClick={this.onClick}/> :
+                  <AiOutlineHeart size="30" onClick={this.onClick}/>}
+                  <P>{this.state.notice}</P>
+              </Wrap>
+          </React.Fragment> 
+      )
+  }
 }
 
 export default LikeCount
 
 const Wrap = styled.div `
   position:relative;
-  top:28px; left:20px;
+  top:0; left:15px;
   cursor:pointer;
 `
 
 
 const P = styled.p `
+  position:absolute;
+  left:-15px;
   width:80px;
   display:flex;
-  margin-top:10px;
+  margin-top:5px;
   margin-bottom:20px;
   font-weight:500;
   font-size:1rem;
-`
-const P2 = styled.p `
-  display:flex;
 `
