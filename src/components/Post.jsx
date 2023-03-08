@@ -5,6 +5,7 @@ import like from '../img/like.png'
 import cmt from '../img/comment.png'
 import post from '../img/post.png'
 import save from '../img/save.png'
+import menu from '../img/menu.svg'
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from 'react-query'
 import { addComment, deletePost, getPost } from '../api/crud'
 import { token } from '../api/crud'
@@ -123,7 +124,7 @@ function Post() {
                                 {
                                     decode_token.sub === item.username ? <EditPost><Link to={`/editpost/${item.id}`}>수정</Link></EditPost> : null
                                 }
-                                
+                                {/* <img src={menu} alt="메뉴"/> */}
                             </UserInfo>
                             <PostContent>
                                 <img
@@ -163,10 +164,10 @@ function Post() {
                                     </div>
                                 </PostDescription>
                                 <CommentInput>
-                                    <form>
+                                    {/* <form>
                                         
                                         <Link to={`/board/${item.id}`}>댓글 달기</Link>
-                                    </form>
+                                    </form> */}
                                 </CommentInput>
                             </PostCommentContainer>
                             

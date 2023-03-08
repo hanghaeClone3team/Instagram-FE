@@ -35,8 +35,11 @@ function Modal(props) {
 
   const onChangeImage = () => {
     const reader = new FileReader();
-
     const file = imgRef.current.files[0];
+    if(file.size > (10 * 1024 * 1024)){
+      alert("파일 크기가 10MB를 넘습니다.")
+      setImageUrl(null)
+    }
     console.log("file", file);
     reader.readAsDataURL(file);
     reader.onloadend = () => {

@@ -33,18 +33,6 @@ function PostModal(props) {
         })
     }
     return (
-        // <PostModalBackground onClick={closePostModal}>
-        //     <PostModalPadding>
-        //         <PostModalContainer>
-        //            <PostModalImage>
-        //                 <img src={props.imgUrl} alt="이미지" />
-        //            </PostModalImage>
-        //            <PostModalMain>
-
-        //            </PostModalMain>
-        //         </PostModalContainer>
-        //     </PostModalPadding>
-        // </PostModalBackground>
         <ModalBackground onClick={closePostModal}>
       <ModalPostOut onClick={closePostModal}>X</ModalPostOut>
       <ModalPostMake onClick={(e) => e.stopPropagation()}>
@@ -78,9 +66,13 @@ function PostModal(props) {
 
           </PostUpload>
 
+         
           
-          <PostTextArea>{props.contents}</PostTextArea>
+          {/* 댓글 영역 */}
           <PostTextArea>
+          <PostContentArea>
+          {props.contents}
+          </PostContentArea>
           {
                 props.comment.map((item) =>(
                     <p key={item.comment_id}>
@@ -90,10 +82,13 @@ function PostModal(props) {
             }
           </PostTextArea>
             
-            <PostTextArea>
-                <input value={newComment} onChange={onCommentHandler}/>
-                <button onClick={onAddCommentHandler}>댓글달기</button>
-            </PostTextArea>
+            {/* 댓글 달기 영역 */}
+            <AddpostTextArea>
+                <AddInputContainer>
+                  <AddInput placeholder = "댓글" value={newComment} onChange={onCommentHandler}/>
+                  <AddButton onClick={onAddCommentHandler}>게시</AddButton>
+                </AddInputContainer>
+            </AddpostTextArea>
         </ModalPostBoxTwo>
       </ModalPostBoxContainer>
     </ModalPostMake>
@@ -144,10 +139,10 @@ const ModalPostBoxContainer = styled.div`
   justify-content: center;
 `
 const ModalPostBoxOne = styled.div`
-    background-color: white;
+  background-color: white;
   border: 1px solid #bababa;
   border-radius: 15px;
-  width: 600px;
+  width: 1000px;
   height: 1000px;
   display: flex;
   flex-direction: column;
@@ -177,6 +172,7 @@ const ModalPostImg = styled.img`
   height: 90%;
   position: absolute;
   bottom: 0;
+  
   &:hover {
     transform: scale(1.05, 1.05); /* 가로2배 새로 1.5배 로 커짐 */
     transition: transform 0.5s; /* 커지는 시간 */
@@ -211,11 +207,11 @@ const ModalPostBoxTwo = styled.div`
   border-radius: 15px;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  
 `
 
 const PostUpload = styled.div`
-  width: 80%;
+  width: 100%;
   margin-top: 10px;
   height: 30px;
   display: flex;
@@ -239,17 +235,52 @@ const PostButton = styled.button`
 const PostTextArea = styled.div`
   width: 90%;
   border: none;
-  height: 400px;
+  height: 80%;
   margin-top: 10px;
   font-size: 15px;
   padding: 10px;
+  margin-left: 20px;
+  border-bottom: solid 1px #bababa;
   &:focus {
     outline: none;
   }
   
   font-weight: 600;
 `
+const PostContentArea = styled.div`
+    width: 200px;
+    height: 200px;
+    border: 1px solid black;
 
+`
+const AddpostTextArea = styled.div`
+    border-top: 1px solid rgb(var(--post-separator));
+    color: rgb(var(--ig-secondary-text));
+    flex-shrink: 0;
+    font-size: var(--system-14-font-size);
+    justify-content: center;
+    line-height: var(--system-14-line-height);
+    position: relative;
+  
+`
+
+const AddInputContainer = styled.div`
+  display: block;
+
+`
+const AddInput =  styled.input`
+
+    border: 1px solid black;
+
+`
+
+const AddButton = styled.button`
+  font-weight: 600;
+  font-size: 18px;
+  color: #0095f6;
+  margin-left: 20%;
+
+`
 // const PostModalBackground = styled.div`
 //     position: fixed;
 //     top: 0;

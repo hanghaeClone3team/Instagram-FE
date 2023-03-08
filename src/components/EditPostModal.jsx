@@ -8,23 +8,7 @@ import { useParams } from 'react-router-dom'
 import useInput from '../hooks/useInput'
 
 function EditPostModal() {
-    // const clostEditPostModal = () => {
-    //     props.setEditPostModal(false)
-    // }
     
-    // const {isLoading, isError, data} = useQuery(['post'], getPost)
-    // if (isLoading) {
-    //     return <h1>로딩중...</h1>
-    // }
-    // if (isError) {
-    //     return <h1>Error...</h1>
-    // }
-
-
-
-    // 백엔드에 있는 데이터값 가져오기
-
-    // 
     const { isLoading, isError, data } = useQuery(['post'], getPost)
     const [contents, setContents] = useState("");
     const queryClient = useQueryClient()
@@ -70,30 +54,197 @@ function EditPostModal() {
       }
       
   return (
-    <EditPostContainer>
-        <form onSubmit={EditPost}>
-            <label>바꿀 텍스트 영역</label>
-            <EditPostTextArea name='contents' value={contents} onChange={(e) => {setContents(e.target.value)}}></EditPostTextArea>
-            <button>수정</button>
-        </form>
-    </EditPostContainer>
-  )
+    <ModalBackground >
+    <ModalPostOut >X</ModalPostOut>
+    <ModalPostMake onClick={(e) => e.stopPropagation()}>
+      <ModalPostBoxContainer>
+        <ModalPostBoxOne>
+          <ModalPostBoxOneLabel>
+            <ModalPostBoxOneLabelName>
+              {/* 게시물  */}
+              <span>게시물 수정하기</span>
+            </ModalPostBoxOneLabelName>
+          </ModalPostBoxOneLabel>
+
+          {/* 이미지 집어넣기 영역 */}
+           <ModalPostImg src=""></ModalPostImg>
+          
+
+          
+         
+
+           
+
+        </ModalPostBoxOne>
+      
+      <ModalPostBoxTwo>
+        
+        <PostUpload>
+
+          <PostButton onClick={EditPost}>수정하기</PostButton>
+
+        </PostUpload>
+
+        
+        <PostTextArea
+          name='content'
+          value={contents}
+          onChange={(e) => {setContents(e.target.value)}}
+          placeholder="내용을 입력하세요"
+        ></PostTextArea>
+      
+      </ModalPostBoxTwo>
+    </ModalPostBoxContainer>
+  </ModalPostMake>
+  </ModalBackground >
+)
 }
 
 export default EditPostModal
 
-const EditPostContainer = styled.div`
-    display: flex;
-    align-items: center;
-    width: 1200px;
-    height: 1200px;
-    background-color: lightgray;
-    color: black;
-    margin: 0 auto;
+const ModalBackground = styled.div`
+    position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.185);
+  z-index: 0;
 `
-const EditPostTextArea = styled.textarea`
-    width: 600px;
-    height: 600px;
-    margin-left: 50%;
-    resize: none;
+const ModalPostOut = styled.div`
+    position: absolute;
+  right: 50px;
+  top: 30px;
+  background-color: transparent;
+  color: white;
+  font-size: 50px;
+  border: transparent;
+`
+// 모달 화면
+// 스타일 조절하려면 이 컴포넌트 조절
+const ModalPostMake = styled.div`
+    width: 1200px;
+    height: 1000px;
+
+    // 모달창 최상단 위치 지정
+    z-index: 999;
+    position: absolute;
+    top: 10%;
+    left: 30%;
+    
+    
+    border: 0 solid transparent;
+    border-radius: 15%;
+`
+const ModalPostBoxContainer = styled.div`
+    width: 1200px;
+  height: 1000px;
+  display: flex;
+  justify-content: center;
+`
+const ModalPostBoxOne = styled.div`
+    background-color: white;
+  border: 1px solid #bababa;
+  border-radius: 15px;
+  width: 600px;
+  height: 1000px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  
+  background-repeat: no-repeat;
+  background-position: center;
+`
+const ModalPostBoxOneLabel = styled.div`
+     margin-top: 10px;
+  width: 90%;
+  height: 30px;
+  border-bottom: solid 1px #bababa;
+  position: absolute;
+  top: 0;
+`
+const ModalPostBoxOneLabelName = styled.div`
+    width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`
+const ModalPostImg = styled.img`
+  width: 100%;
+  height: 90%;
+  position: absolute;
+  bottom: 0;
+  &:hover {
+    transform: scale(1.05, 1.05); /* 가로2배 새로 1.5배 로 커짐 */
+    transition: transform 0.5s; /* 커지는 시간 */
+  }
+
+`
+
+const ModalPostImgBox = styled.input`
+  display: none;
+`
+
+const ModalPostBoxTwoLabel = styled.div`
+    margin-top: 180px;
+  margin-bottom: 20px;
+`
+const SelectImgButton = styled.button`
+    background: #0095f6;
+  border: none;
+  color: white;
+  font-size: 13px;
+  width: 120px;
+  height: 30px;
+  border-radius: 5px;
+  cursor: pointer;
+`
+
+const ModalPostBoxTwo = styled.div`
+  width: 400px;
+  height: 1000px;
+  border: 1px solid #bababa;
+  background-color: #ffffff;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+`
+
+const PostUpload = styled.div`
+  width: 80%;
+  margin-top: 10px;
+  height: 30px;
+  display: flex;
+  
+  justify-content: right;
+  border-bottom: 1px solid #bababa;
+`
+
+const PostButton = styled.button`
+  width: 50%;
+  height: 30px;
+  border: none;
+  font-weight: 600;
+  font-size: 18px;
+  background: white;
+  border: none;
+  color: #0095f6;
+  cursor: pointer;
+`
+
+const PostTextArea = styled.textarea`
+  width: 90%;
+  border: none;
+  height: 400px;
+  margin-top: 10px;
+  font-size: 15px;
+  padding: 10px;
+  &:focus {
+    outline: none;
+  }
+  resize: none;
+  font-weight: 600;
 `
