@@ -20,5 +20,11 @@ const usernameCheck = async({ username }) => {
     return response;
 }
 
+const likebtnClickUser = async({ username }) => {
+    const response = await instance.post(`/api/post/{id}`, { username });
+    console.log(response);
+    return response;
+}
 
-export { register , login, usernameCheck }
+
+export { register , login, usernameCheck, likebtnClickUser }

@@ -227,7 +227,7 @@ const EditPost = styled.p`
         font-size: 14px;
         line-height: 18px;
         font-weight: 600;
-        margin-left: 20px;
+        margin-left: 18px;
         cursor: pointer;
         color: #18a4f8;
 `
@@ -257,15 +257,13 @@ const PostCommentButton = styled.div`
     img{
         width: 24px;
         height: 22px;
-        margin-left: -15px;
-        margin-right: 38px;
+        margin-left:35px;
+        margin-right:-10px;
         cursor: pointer;
         &:last-child{
-            margin-left: 420px;
+            margin-left: 455px;
         }
     }
-    
-
 `
 
 const PostDescription = styled.div`
@@ -287,9 +285,10 @@ const PostDescription = styled.div`
         font-size: 12px;
         display: flex;
         justify-content: space-between;
+        margin-left:15px;
         color: gray;
         p{
-      
+        margin-right:10px;
       cursor: pointer;
   }
     }
@@ -303,11 +302,12 @@ const CommentInput = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    margin-left:13px;
     input{
         flex: 0.9;
         height: 30px;
         border: none;
-        margin-right: 10px;
+        margin-left:10px;
         outline: none;
     }
     button{
