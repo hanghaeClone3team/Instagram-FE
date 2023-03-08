@@ -3,14 +3,41 @@ import styled from 'styled-components';
 import profile from '../img/profile.png';
 import { IoMdSettings } from "react-icons/io";
 import Sidebar from "../components/Sidebar";
+import { BiCamera } from "react-icons/bi";
 
 const MyPageContents = () => {
     const [tab, setTab] = useState(0);
 
     const tabArr = [
-        {name:"게시물", content: "" },
-        {name:"저장됨", content: "" },
-        {name:"태그됨", content: "" },
+        {
+            name:(
+                <Li> 게시물 </Li>
+            ),
+            content:(
+                <Con1>
+                    <BiCamera size="50"/>
+                    <H3>사진공유</H3>
+                    <Ment>사진을 공유하면 회원님의 프로필에 표시됩니다.</Ment>
+                    <ShareBtn>첫 사진 공유하기</ShareBtn>
+                </Con1>
+            )
+        },
+        {
+            name:(
+                <Li> 저장됨 </Li>
+            ),
+            content:(
+                <div></div>
+            )
+        },
+        {
+            name:(
+                <Li> 태그됨 </Li>
+            ),
+            content:(
+                <div></div>
+            )
+        }
     ];
 
     const selectTabHandler = (index) => {
@@ -23,7 +50,7 @@ const MyPageContents = () => {
         <Top>
             <ProfileImg src={profile}></ProfileImg>
             <My1>
-                <ID>id</ID>
+                <ID>ID</ID>
                 <EditBtn>프로필 편집</EditBtn>
                 <IoMdSettings size="30"/>
             </My1>
@@ -31,7 +58,7 @@ const MyPageContents = () => {
             <My2>
                 게시물 &nbsp;<P1>0</P1>
                 팔로워 &nbsp;<P2>10</P2>
-                게시물 &nbsp;<P3>20</P3>
+                팔로우 &nbsp;<P3>20</P3>
             </My2>
         </Top>
         <hr style={{ width:"50%", background:"#c7c7c7",height:"1px",  border:"0" , marginTop:"270px"}}/>
@@ -165,5 +192,34 @@ const Desc = styled.div`
     text-align:center;
 `
 
+const Li = styled.li `
+    list-style:none;
+`
+
+const Con1 = styled.div `
+    position:relative;
+    top:200px;
+    width:100%;
+    display:flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+`
+
+const H3 = styled.h3 `
+    font-size:2rem;
+    font-weight:bold;
+    margin-top:10px;
+    margin-bottom:20px;
+`
+
+const Ment = styled.p `
+    margin-bottom:30px;
+`
+
+const ShareBtn = styled.button `
+    color:#0095f6;
+    font-weight:bold;
+`
 
 

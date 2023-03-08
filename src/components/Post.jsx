@@ -12,7 +12,12 @@ import jwtDecode from 'jwt-decode'
 import PostModal from './PostModal'
 import EditPostModal from './EditPostModal'
 import { Link, useLocation } from 'react-router-dom'
-import { useInView } from 'react-intersection-observer'
+
+
+
+import LikeCountAcction from '../components/LikeCountAction';
+import FollowContents from '../components/FollowContents';
+
 
 
 function Post() {
@@ -95,6 +100,7 @@ function Post() {
                                 {
                                     decode_token.sub === item.username ? <button onClick={() => {onDeletePostHandler(item.id)}}>삭제</button> : null
                                 }
+                                <FollowContents />
                                 {
                                     decode_token.sub === item.username ? <EditPost><Link to={`/editpost/${item.id}`}>수정</Link></EditPost> : null
                                 }
@@ -108,7 +114,8 @@ function Post() {
                             </PostContent>
                             <PostCommentContainer>
                                 <PostCommentButton>
-                                    <img src={like} alt="좋아요" />
+                                    {/* <img src={like} alt="좋아요" /> */}
+                                    <LikeCountAcction />
                                     <img src={cmt} alt="댓글 보기" onClick={() => {
                                         onId(item.id)
                                         onComment(item.comments);
@@ -120,9 +127,6 @@ function Post() {
                                     <img src={post} alt="공유" />
                                     <img src={save} alt="저장" />
                                 </PostCommentButton>
-                                <LikeCount>
-                                    <p>좋아요 100개</p>
-                                </LikeCount>
                                 <PostDescription showComment={showComment}>
                                     <h5>
                                         {item.contents}
@@ -204,7 +208,7 @@ const EditPost = styled.p`
         font-size: 14px;
         line-height: 18px;
         font-weight: 600;
-        margin-left: 50px;
+        margin-left: 20px;
         cursor: pointer;
         color: #18a4f8;
 `
@@ -234,24 +238,17 @@ const PostCommentButton = styled.div`
     img{
         width: 24px;
         height: 22px;
-        margin-left: 10px;
-        margin-right: 10px;
+        margin-left: -15px;
+        margin-right: 38px;
         cursor: pointer;
         &:last-child{
-            margin-left: 450px;
+            margin-left: 420px;
         }
     }
     
 
 `
-const LikeCount = styled.div`
-    p{
-        margin-left: 10px;
-        font-size: 15px;
-        font-weight: 600;
-        margin-bottom: 10px;
-    }
-`
+
 const PostDescription = styled.div`
     display: flex;
     flex-direction: column;
