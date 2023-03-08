@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import styled from 'styled-components'
 import user from '../img/user.webp'
 import like from '../img/like.png'
@@ -12,6 +12,7 @@ import jwtDecode from 'jwt-decode'
 import PostModal from './PostModal'
 import EditPostModal from './EditPostModal'
 import { Link, useLocation } from 'react-router-dom'
+import { useInView } from 'react-intersection-observer'
 
 
 function Post() {
@@ -26,6 +27,8 @@ function Post() {
     const [id, setId] = useState(0)
     const [postModal, setPostModal] = useState(false);
     const [editPostModal, setEditPostModal] = useState(false)
+    
+   
     
     const showPostModal = () => {
         setPostModal(true)
@@ -83,7 +86,7 @@ function Post() {
                 {
                     data.data.map((item,i) => (
                        
-                        <Container key = {item.id}>
+                        <Container key = {item.id} >
                             
                             <UserInfo>
 
@@ -143,6 +146,7 @@ function Post() {
                                     </form>
                                 </CommentInput>
                             </PostCommentContainer>
+                            
                             <div>
        
         {/* {
