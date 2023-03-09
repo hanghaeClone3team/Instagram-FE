@@ -58,7 +58,8 @@ export const likePost = async (postId) => {
 
 // 상세 게시글 가져오기
 export const getSinglePost = async (paramId) => {
-    const response = await instance.get(`api/post/${paramId}`)
+    console.log(paramId)
+    const response = await instance.get(`/api/post/${paramId}`)
     return response
 }
 // 인스타 댓글 달기
@@ -77,6 +78,19 @@ export const deleteComment = async (id) => {
     await instance.delete(`/api/post/${id.boardId}/comment/${id.commentId}`)
 }
 
+
+// // 이 토큰은 앱이 실행됐을때 생성됨
+// // => undefined
+
+
 const cookie = new Cookies();
 export const token = cookie.get('authorization');
 console.log(token)
+
+
+// 이렇게 함수를 통해서 가져와야 정상적으로 토큰을 가져올 수 있다.
+export const getCookie = () => {
+    const newCookie = new Cookies();
+    const token  =  newCookie.get('authorization');
+    return token  
+}

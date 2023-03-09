@@ -4,8 +4,11 @@ import styled from 'styled-components'
 import { editPost, getPost } from '../api/crud'
 import { token } from '../api/crud'
 import jwtDecode from 'jwt-decode'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import useInput from '../hooks/useInput'
+import '../css/postmodal.css'
+import dot from '../img/dots.png'
+import profile from '../img/profile.png'
 
 function EditPostModal() {
     
@@ -13,7 +16,7 @@ function EditPostModal() {
     const [contents, setContents] = useState("");
     const queryClient = useQueryClient()
     const params = useParams()
-   
+    const navigate = useNavigate()
 
     
 
@@ -23,7 +26,8 @@ function EditPostModal() {
    
       const editMutation = useMutation(editPost, {
         onSuccess : () => {
-            queryClient.invalidateQueries()
+            queryClient.invalidateQueries('post');
+            navigate("/board");
         }
       })
     if (isLoading) {
@@ -51,23 +55,25 @@ function EditPostModal() {
           postId:params.id,
           postRequestDto:body
         })
+
+
       }
       
   return (
-    <ModalBackground >
-    <ModalPostOut >X</ModalPostOut>
-    <ModalPostMake onClick={(e) => e.stopPropagation()}>
-      <ModalPostBoxContainer>
-        <ModalPostBoxOne>
-          <ModalPostBoxOneLabel>
-            <ModalPostBoxOneLabelName>
-              {/* 게시물  */}
-              <span>게시물 수정하기</span>
-            </ModalPostBoxOneLabelName>
-          </ModalPostBoxOneLabel>
+  //   <ModalBackground onClick={() => {navigate("/board")}}>
+  //   <ModalPostOut onClick={() => {navigate("/board")}}>X</ModalPostOut>
+  //   <ModalPostMake onClick={(e) => e.stopPropagation()}>
+  //     <ModalPostBoxContainer>
+  //       <ModalPostBoxOne>
+  //         <ModalPostBoxOneLabel>
+  //           <ModalPostBoxOneLabelName>
+  //             {/* 게시물  */}
+  //             <span>게시물 수정하기</span>
+  //           </ModalPostBoxOneLabelName>
+  //         </ModalPostBoxOneLabel>
 
-          {/* 이미지 집어넣기 영역 */}
-           <ModalPostImg src=""></ModalPostImg>
+  //         {/* 이미지 집어넣기 영역 */}
+  //          <ModalPostImg src={forEditData.imageUrl} alt="사진"></ModalPostImg>
           
 
           
@@ -75,28 +81,58 @@ function EditPostModal() {
 
            
 
-        </ModalPostBoxOne>
+  //       </ModalPostBoxOne>
       
-      <ModalPostBoxTwo>
+  //     <ModalPostBoxTwo>
         
-        <PostUpload>
+  //       <PostUpload>
 
-          <PostButton onClick={EditPost}>수정하기</PostButton>
+  //         <PostButton onClick={EditPost}>수정하기</PostButton>
 
-        </PostUpload>
+  //       </PostUpload>
 
         
-        <PostTextArea
-          name='content'
-          value={contents}
-          onChange={(e) => {setContents(e.target.value)}}
-          placeholder="내용을 입력하세요"
-        ></PostTextArea>
+  //       <PostTextArea
+  //         name='content'
+  //         value={contents}
+  //         onChange={(e) => {setContents(e.target.value)}}
+  //         placeholder="내용을 입력하세요..."
+  //       >{forEditData.contents}</PostTextArea>
       
-      </ModalPostBoxTwo>
-    </ModalPostBoxContainer>
-  </ModalPostMake>
-  </ModalBackground >
+  //     </ModalPostBoxTwo>
+  //   </ModalPostBoxContainer>
+  // </ModalPostMake>
+  // </ModalBackground >
+  <div className='modal-container' >
+        <div className='close-modal' >X</div>
+        <div className='modal'>
+          <img className='modal-image' src ={forEditData.imageUrl}  alt='이미지'/>
+          <div className='modal-content-section' >
+            <div className='modal-top-section modal-section'>
+              <img  className='profile-image' src={profile} alt='이미지'/>
+              <div className='username'>{forEditData.username}</div>
+              <div className='spacer'></div>
+              <div className='dot'><img className='dot-image' src={dot} alt="dot"/></div>
+            </div>
+            <div className='modal-comment-section modal-section'>
+              <div className='comment-container'>
+                <img className='profile-image' src={profile} alt="프로필" />
+                <div>
+                  <div>
+                    <span className='username'>{forEditData.username}</span>
+                    <span>{forEditData.contents}</span>
+                  </div>
+                </div>
+               </div>
+          
+            <div className='write-section modal-section'>
+             <textarea type="text" placeholder='수정할 내용을 입력하세요' value={contents} onChange={(e) => {setContents(e.target.value)}}></textarea>
+             <button onClick={EditPost}>수정하기</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 )
 }
 

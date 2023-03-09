@@ -7,7 +7,7 @@ import cmt from '../img/comment.png'
 import post from '../img/post.png'
 import save from '../img/save.png'
 import { useMutation, useQuery, useQueryClient } from 'react-query'
-import { addComment, deleteComment, deletePost, getPost, getSinglePost } from '../api/crud'
+import { addComment, deleteComment, deletePost, getCookie, getPost, getSinglePost } from '../api/crud'
 import { token } from '../api/crud'
 import jwtDecode from 'jwt-decode'
 // import PostModal from './PostModal'
@@ -66,8 +66,8 @@ function SingleBoard() {
     if (isError) {
         return <h1>Error...</h1>
     }
-    
-    const decode_token = jwtDecode(token)
+    console.log(data)
+    const decode_token = jwtDecode(getCookie())
 
 
     const onDeletePostHandler = (postId) => {

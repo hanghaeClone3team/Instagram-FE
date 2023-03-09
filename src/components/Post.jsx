@@ -7,12 +7,12 @@ import post from '../img/post.png'
 import save from '../img/save.png'
 import menu from '../img/menu.svg'
 import { useInfiniteQuery, useMutation, useQuery, useQueryClient } from 'react-query'
-import { addComment, deletePost, getPost } from '../api/crud'
+import { addComment, deletePost, getCookie, getPost } from '../api/crud'
 import { token } from '../api/crud'
 import jwtDecode from 'jwt-decode'
 import PostModal from './PostModal'
 import EditPostModal from './EditPostModal'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useInView } from 'react-intersection-observer'
 import instance from '../api/instance/instance'
 import LikeCountAcction from '../components/LikeCountAction';
@@ -22,9 +22,9 @@ import FollowContents from '../components/FollowContents';
 
 function Post() {
 
-    
+
     const [showComment, setShowComment] = useState(false)
-    
+
     const [comment, setComment] = useState([]);
     const [contents, setContents] = useState("")
     const [useName, setUserName] = useState("")
@@ -32,17 +32,17 @@ function Post() {
     const [id, setId] = useState(0)
     const [postModal, setPostModal] = useState(false);
     const [editPostModal, setEditPostModal] = useState(false)
-    const {ref, inView} = useInView();
-   
-    
+    const { ref, inView } = useInView();
+
+    const navigate = useNavigate();
     const showPostModal = () => {
         setPostModal(true)
     }
-    
-     const showEditPostModal = () => {
+
+    const showEditPostModal = () => {
         setEditPostModal(true)
     }
-
+    
     const onComment = (newComment) => {
         setComment(newComment)
     }
@@ -71,18 +71,18 @@ function Post() {
     //             }
     //         },
     //     }
-        
+
     // )
-    
+
     const { isLoading, isError, data } = useQuery(['post'], getPost)
 
-    
+
 
 
     const queryClient = useQueryClient();
 
     const deletePostMutation = useMutation(deletePost, {
-        onSuccess : () => {
+        onSuccess: () => {
             queryClient.invalidateQueries('post')
         }
     })
@@ -95,95 +95,92 @@ function Post() {
         return <h1>Error...</h1>
     }
     console.log(data.data)
-    
+
 
 
     const onDeletePostHandler = (postId) => {
         alert("정말로 삭제하시겠습니까?")
         deletePostMutation.mutate(postId)
     }
-  
-   
-    const decode_token = jwtDecode(token)
+
+
+    const decode_token = jwtDecode(getCookie())
     return (
         <>
-            
-                {
-                    data.data.map((item,i) => (
-                       
-                        <Container key = {item.id} >
-                            
-                            <UserInfo>
 
-                                <img src={user} alt='유저' />
-                                <UserInfoText>{item.username}</UserInfoText>
+            {
+                data.data.map((item, i) => (
+
+                    <Container key={item.id} >
+
+                        <UserInfo>
+
+                            <img src={user} alt='유저' />
+                            <UserInfoText>{item.username}</UserInfoText>
+
+                            <FollowContents />
+                            <HandlerContainer>
                                 {
-                                    decode_token.sub === item.username ? <button onClick={() => {onDeletePostHandler(item.id)}}>삭제</button> : null
+                                    decode_token.sub === item.username ? <DeleteButton onClick={() => {onDeletePostHandler(item.id)}}>삭제</DeleteButton> : null
                                 }
-                                <FollowContents />
                                 {
                                     decode_token.sub === item.username ? <EditPost><Link to={`/editpost/${item.id}`}>수정</Link></EditPost> : null
                                 }
-                                {/* <img src={menu} alt="메뉴"/> */}
-                            </UserInfo>
-                            <PostContent>
-                                <img
-                                    src={item.imageUrl}
-                                    alt='이미지'
-                                />
-                            </PostContent>
-                            <PostCommentContainer>
-                                <PostCommentButton>
-                                    {/* <img src={like} alt="좋아요" /> */}
-                                    <LikeCountAcction />
-                                    <img src={cmt} alt="댓글 보기" onClick={() => {
-                                        onId(item.id)
-                                        onComment(item.comments);
-                                        onContents(item.contents)
-                                        onUserName(item.username)
-                                        onUrl(item.imageUrl)
-                                        showPostModal()
-                                    }} />
-                                    <img src={post} alt="공유" />
-                                    <img src={save} alt="저장" />
-                                </PostCommentButton>
-                                <PostDescription showComment={showComment}>
-                                    <h5>
-                                        {item.contents}
-                                    </h5>
+                            </HandlerContainer>
+                            {/* <img src={menu} alt="메뉴"/> */}
+                        </UserInfo>
+                        <PostContent>
+                            <img
+                                src={item.imageUrl}
+                                alt='이미지'
+                            />
+                        </PostContent>
+                        <PostCommentContainer>
+                            <PostCommentButton>
+                                {/* <img src={like} alt="좋아요" /> */}
+                                <LikeCountAcction />
+                                <img src={cmt} alt="댓글 보기" onClick={() => {
+                                    onId(item.id)
+                                    onComment(item.comments);
+                                    onContents(item.contents)
+                                    onUserName(item.username)
+                                    onUrl(item.imageUrl)
+                                    showPostModal()
+                                }} />
+                                <img src={post} alt="공유" />
+                                <img src={save} alt="저장" />
+                            </PostCommentButton>
+                            <PostDescription showComment={showComment}>
+                                <h5>
+                                    {item.contents}
+                                </h5>
 
-                                    <div className='description_button'>
-                                    <span onClick={() => {
-                                        onComment(item.comments);
-                                        onContents(item.contents)
-                                        onUserName(item.username)
-                                        onUrl(item.imageUrl)
-                                        showPostModal()
-                                    }}>상세보기</span>
-                                        <p onClick={() => setShowComment(!showComment)}>더 보기</p>
-                                    </div>
-                                </PostDescription>
-                                <CommentInput>
-                                    {/* <form>
+                                <div className='description_button'>
+                                    <span setPostModal={setPostModal}>상세보기</span>
+                                    <p onClick={() => setShowComment(!showComment)}>더 보기</p>
+                                </div>
+                            </PostDescription>
+                            <CommentInput>
+                                {/* <form>
                                         
                                         <Link to={`/board/${item.id}`}>댓글 달기</Link>
                                     </form> */}
-                                </CommentInput>
-                            </PostCommentContainer>
-                            
-                            <div>
-       
-        {/* {
+                            </CommentInput>
+                        </PostCommentContainer>
+
+                        <div>
+
+                            {/* {
           editPostModal && <EditPostModal setEditPostModal={setEditPostModal} post={item}/> 
         } */}
-        </div>
-                        </Container>
-                        
-                    ))
-                }
-        {
-            postModal && <PostModal setPostModal={setPostModal} comment={comment} contents={contents} useName={useName} imgUrl={imgUrl} id={id}/> 
-        }
+                        </div>
+                    </Container>
+
+                ))
+            }
+            {
+                postModal && <PostModal setPostModal={setPostModal} comment={comment} contents={contents} useName={useName} imgUrl={imgUrl} id={id} />
+            }
         </>
     )
 }
@@ -295,8 +292,17 @@ const PostDescription = styled.div`
     }
     
 `
+const HandlerContainer = styled.div`
+    display: flex;
+    flex-direction: row;
+    margin-left: 20px;
+`
+const DeleteButton = styled.button`
+    font-size: 14px;
+    line-height: 18px;
+    font-weight: 600;
 
-
+`
 const CommentInput = styled.div`
     padding: 10px 0px;
     width: 100%;
